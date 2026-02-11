@@ -20,7 +20,7 @@ struct ProjectMetaData
 };
 NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(ProjectMetaData, projectName);
 
-// no i do not understand how this works, yes i stole it from the internet. I asked chatgpt to comment it to help.
+
 std::string OpenFileExlorer(DWORD flags)
 {
     // Initialize COM
@@ -172,8 +172,9 @@ int main()
         window.display();
     }
 
-    printf("DestroyContext()\n");
-    ImGui::SFML::Shutdown();
+    
+    
+    ImGui::SFML::Shutdown(window);
 
 	return 0;
 }
