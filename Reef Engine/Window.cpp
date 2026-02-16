@@ -1,9 +1,9 @@
 #include "Window.h"
 #include "Vector2.h"
 
-Window::Window(Math::Vector2u size, std::string name) 
+Window::Window(unsigned int scale, std::string name) 
 {
-	m_window = new sf::RenderWindow(sf::VideoMode(size), name, sf::Style::Titlebar | sf::Style::Close);
+	m_window = new sf::RenderWindow(sf::VideoMode({scale * aspect.x, scale * aspect.y}), name, sf::Style::Titlebar | sf::Style::Close);
 }
 
 Window::~Window()

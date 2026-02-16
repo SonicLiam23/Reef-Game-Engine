@@ -6,13 +6,15 @@
 class Window
 {
 public:
-	Window(Math::Vector2u size, std::string name);
+	Window(unsigned int scale, std::string name);
 	~Window();
 	sf::RenderWindow* Get();
 
 protected:
 	sf::RenderWindow* m_window;
 	sf::Clock deltaClock;
+	unsigned int m_windowScale;
+	const Math::Vector2i aspect{ 16, 9 };
 
 };
 

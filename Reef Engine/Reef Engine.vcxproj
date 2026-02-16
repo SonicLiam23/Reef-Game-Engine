@@ -152,6 +152,7 @@
     <ClInclude Include="EngineTypes.h" />
     <ClInclude Include="EditorWindow.h" />
     <ClInclude Include="Object.h" />
+    <ClInclude Include="SpriteUtils.h" />
     <ClInclude Include="RuntimeEngine.h" />
     <ClInclude Include="Script.h" />
     <ClInclude Include="Vector2.h" />

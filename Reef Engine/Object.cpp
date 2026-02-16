@@ -1,5 +1,11 @@
 #include "Object.h"
 #include "Script.h"
+#include "SpriteUtils.h"
+
+Object::Object()
+{
+
+}
 
 void Object::Start()
 {
@@ -9,13 +15,32 @@ void Object::Start()
 	}
 }
 
-void Object::SetTexture(std::string imgPath)
+void Object::SetTexture(const std::string& imgPath)
 {
-	// TODO
-	// add string to some map of sf::Textures
-	// if i already have a texture for that string, use it
-	// if not create it and use it
-	// basically how i did it for my SDL2 engine
+	sf::Texture& texture = SpriteUtils::GetOrLoadTexture(imgPath);
+
+	if (!m_sprite)
+	{
+		m_sprite = new sf::Sprite(texture);
+		return;
+	}
+		
+	m_sprite->setTexture(texture);
+}
+
+void Object::SetPosition(Math::Vector2f newPos)
+{
+	m_sprite->setPosition(newPos);
+}
+
+void Object::SetSize(Math::Vector2f newSize)
+{
+	m_sprite->setScale(newSize);
+}
+
+Math::Vector2f Object::GetPosition()
+{
+	return (Math::Vector2f)m_sprite->getPosition();
 }
 
 void Object::Update()
@@ -24,4 +49,9 @@ void Object::Update()
 	{
 		script->Update();
 	}
+}
+
+Object::~Object()
+{
+	delete m_sprite;
 }

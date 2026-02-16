@@ -92,5 +92,8 @@
     <ClInclude Include="RuntimeEngine.h">
       <Filter>Header Files\EngineStates</Filter>
     </ClInclude>
+    <ClInclude Include="SpriteUtils.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

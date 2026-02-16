@@ -9,11 +9,13 @@ class EditorWindow :
 public:
     using Window::Window;
     void Init();
-    void Update(ObjectVec objectsToRender);
+    void Update(ObjectVec& objectsToRender);
 
 private:
     ImVec2 m_buttonSize;
     ImVec2 m_imGuiWindowSize;
+    ImGuiWindowFlags m_dockspaceflags{};
+    
     void SetImGuiElements();
 };
 

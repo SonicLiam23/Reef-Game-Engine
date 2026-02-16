@@ -3,9 +3,35 @@
 #include "SFML/Graphics.hpp"
 #include <SFML/System/Clock.hpp>
 #include "Window.h"
-
+#include "EditorWindow.h"
+#include "EngineTypes.h"
+#include "Object.h"
 
 int main()
+{
+	EditorWindow window(100, "Reef Engine");
+	window.Init();
+
+	Object* testObj = new Object();
+	ObjectVec objects;
+	objects.push_back(testObj);
+
+	testObj->SetTexture("Images/testimg.png");
+	testObj->SetPosition({ 400, 200 });
+	testObj->SetSize({ 5, 5 });
+	
+	while (window.Get()->isOpen())
+	{
+		testObj->SetPosition({ testObj->GetPosition().x + 1, testObj->GetPosition().y });
+		window.Update(objects);
+	}
+
+	return 0;
+}
+
+
+
+int main_old()
 {
 #ifndef _WIN32
 	std::cout << "Windows only bozo";
@@ -43,12 +69,13 @@ int main()
 		ImGuiWindowFlags_NoDocking | 
 		ImGuiWindowFlags_NoTitleBar |
 		ImGuiWindowFlags_NoCollapse |
-		ImGuiWindowFlags_NoResize |
 		ImGuiWindowFlags_NoMove |
+		ImGuiWindowFlags_NoResize |
 		ImGuiWindowFlags_NoBackground;
 
 	while (window.isOpen())
 	{
+		windowSize = window.getSize();
 		while (std::optional<sf::Event> eventOpt = window.pollEvent())
 		{
 			const sf::Event& event = *eventOpt;
@@ -77,7 +104,7 @@ int main()
 		ImGui::End();
 #pragma endregion
 
-		ImGui::Begin("Tools Bar", nullptr, ImGuiWindowFlags_NoResize);
+		ImGui::Begin("Tools Bar", nullptr);
 
 		ImGui::Button("Add Image To Project", buttonSize);
 		ImGui::Button("Tooltip button", buttonSize);
@@ -92,9 +119,6 @@ int main()
 		ImGui::SameLine(0.0f, spacing);
 		if (ImGui::ArrowButton("-", ImGuiDir_Up)) { windowScale++; window.setSize({ windowScale * 16, windowScale * 9 }); }
 		ImGui::PopItemFlag();
-
-		float value;
-		
 
 		ImGui::End();
 		window.clear();
