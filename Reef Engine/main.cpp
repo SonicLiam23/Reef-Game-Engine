@@ -11,7 +11,9 @@ int main()
 	std::cout << "Windows only bozo";
 	return 0;
 #endif // !WIN
-	sf::RenderWindow window(sf::VideoMode({ 1920, 1080 }), "Reef Engine v0", sf::Style::Titlebar | sf::Style::Close);
+	unsigned int windowScale = 100;
+	sf::RenderWindow window(sf::VideoMode({ windowScale * 16, windowScale * 9 }), "Reef Engine", sf::Style::Titlebar | sf::Style::Close);
+	
 	sf::Vector2u windowSize = window.getSize();
 	ImVec2 imguiSize(static_cast<float>(windowSize.x) / 10, static_cast<float>(windowSize.y));
 
@@ -20,6 +22,7 @@ int main()
 	window.setFramerateLimit(60);
 	sf::Clock deltaClock;
 
+	
 
 #pragma region OBJECT_SETUP
 	sf::Texture image("Images/testimg.png");
@@ -32,6 +35,17 @@ int main()
 
 
 	ImGui::SFML::Init(window);
+	ImGui::GetIO().ConfigFlags |= ImGuiConfigFlags_DockingEnable;
+	ImGui::SetNextWindowPos(ImVec2(0, 0));
+	ImGui::SetNextWindowSize(imguiSize);
+
+	ImGuiWindowFlags dockspaceflags =
+		ImGuiWindowFlags_NoDocking | 
+		ImGuiWindowFlags_NoTitleBar |
+		ImGuiWindowFlags_NoCollapse |
+		ImGuiWindowFlags_NoResize |
+		ImGuiWindowFlags_NoMove |
+		ImGuiWindowFlags_NoBackground;
 
 	while (window.isOpen())
 	{
@@ -48,14 +62,36 @@ int main()
 		}
 
 		ImGui::SFML::Update(window, deltaClock.restart());
+
+#pragma region FULL_WINDOW_DOCKING_SPACE
+
 		ImGui::SetNextWindowPos(ImVec2(0, 0));
-		ImGui::SetNextWindowSize(imguiSize);
-		ImGui::Begin(" ", nullptr, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoTitleBar);
+		ImGui::SetNextWindowSize({ static_cast<float>(windowSize.x), static_cast<float>(windowSize.y) });
+		// Invisible window
+		ImGui::Begin("DockSpaceWindow", nullptr, dockspaceflags);
+
+		// Create the dockspace inside it
+		ImGuiID dockspace_id = ImGui::GetID("MyDockSpace");
+		ImGui::DockSpace(dockspace_id, ImVec2(0.0f, 0.0f), ImGuiDockNodeFlags_PassthruCentralNode);
+
+		ImGui::End();
+#pragma endregion
+
+		ImGui::Begin("Tools Bar", nullptr, ImGuiWindowFlags_NoResize);
 
 		ImGui::Button("Add Image To Project", buttonSize);
 		ImGui::Button("Tooltip button", buttonSize);
 		if (ImGui::IsItemHovered(ImGuiHoveredFlags_Stationary))
 			ImGui::SetTooltip("I am a tooltip requiring mouse to be stationary before activating.");
+
+		ImGui::Text("WindowSize:");
+		ImGui::SameLine();
+		float spacing = ImGui::GetStyle().ItemInnerSpacing.x;
+		ImGui::PushItemFlag(ImGuiItemFlags_ButtonRepeat, true);
+		if (ImGui::ArrowButton("+", ImGuiDir_Down)) { windowScale--; window.setSize({ windowScale * 16, windowScale * 9 }); }
+		ImGui::SameLine(0.0f, spacing);
+		if (ImGui::ArrowButton("-", ImGuiDir_Up)) { windowScale++; window.setSize({ windowScale * 16, windowScale * 9 }); }
+		ImGui::PopItemFlag();
 
 		float value;
 		

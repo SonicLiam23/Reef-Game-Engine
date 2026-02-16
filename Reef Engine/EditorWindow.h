@@ -3,7 +3,7 @@
 #include "imgui.h"
 #include "EngineTypes.h"
 
-class EngineWindow :
+class EditorWindow :
     public Window
 {
 public:
@@ -17,3 +17,4 @@ private:
     void SetImGuiElements();
 };
 
+ 

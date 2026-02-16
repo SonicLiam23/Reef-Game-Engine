@@ -131,8 +131,9 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="EditorEngine.cpp" />
     <ClCompile Include="Engine.cpp" />
-    <ClCompile Include="EngineWindow.cpp" />
+    <ClCompile Include="EditorWindow.cpp" />
     <ClCompile Include="imgui-SFML.cpp" />
     <ClCompile Include="imgui.cpp" />
     <ClCompile Include="imgui_draw.cpp" />
@@ -140,14 +141,18 @@
     <ClCompile Include="imgui_widgets.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Object.cpp" />
+    <ClCompile Include="RuntimeEngine.cpp" />
     <ClCompile Include="Script.cpp" />
     <ClCompile Include="Window.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="EditorEngine.h" />
     <ClInclude Include="Engine.h" />
+    <ClInclude Include="EngineState.h" />
     <ClInclude Include="EngineTypes.h" />
-    <ClInclude Include="EngineWindow.h" />
+    <ClInclude Include="EditorWindow.h" />
     <ClInclude Include="Object.h" />
+    <ClInclude Include="RuntimeEngine.h" />
     <ClInclude Include="Script.h" />
     <ClInclude Include="Vector2.h" />
     <ClInclude Include="Window.h" />

@@ -1,8 +1,8 @@
-#include "EngineWindow.h"
+#include "EditorWindow.h"
 #include "imgui.h"
 #include "imgui-SFML.h"
 
-void EngineWindow::Init()
+void EditorWindow::Init()
 {
 	m_window->setFramerateLimit(60);
 
@@ -12,7 +12,7 @@ void EngineWindow::Init()
 	m_buttonSize = { -FLT_MIN, 0.0f };
 }
 
-void EngineWindow::Update(ObjectVec objectsToRender)
+void EditorWindow::Update(ObjectVec objectsToRender)
 {
 	SetImGuiElements();
 	m_window->clear();
@@ -23,13 +23,13 @@ void EngineWindow::Update(ObjectVec objectsToRender)
 	m_window->display();
 }
 
-void EngineWindow::SetImGuiElements()
+void EditorWindow::SetImGuiElements()
 {
 	ImGui::SFML::Update(*m_window, deltaClock.restart());
 	ImGui::SetNextWindowPos({ 0, 0 });
 	ImGui::SetNextWindowSize(m_imGuiWindowSize);
 
-	ImGui::Begin(" ", nullptr, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoTitleBar);
+	ImGui::Begin(" ", nullptr);
 
 	ImGui::Button("Add Image To Project", m_buttonSize);
 	ImGui::Button("Tooltip button", m_buttonSize);
