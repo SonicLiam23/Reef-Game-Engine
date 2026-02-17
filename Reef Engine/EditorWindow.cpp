@@ -86,6 +86,7 @@ void EditorWindow::SetImGuiElements()
 
 	ImGui::Begin("Tools Bar", nullptr);
 
+	ImGui::BringWindowToDisplayFront(ImGui::GetCurrentWindow());
 	ImGui::Button("Add Image To Project", m_buttonSize);
 	ImGui::Button("Tooltip button", m_buttonSize);
 	if (ImGui::IsItemHovered(ImGuiHoveredFlags_Stationary))
