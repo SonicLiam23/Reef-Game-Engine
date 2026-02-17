@@ -3,6 +3,7 @@
 #include "imgui.h"
 #include "EngineTypes.h"
 
+// contains the Editor OS window and the ImGui windows inside it.
 class EditorWindow :
     public Window
 {
@@ -15,6 +16,8 @@ private:
     ImVec2 m_buttonSize;
     ImVec2 m_imGuiWindowSize;
     ImGuiWindowFlags m_dockspaceflags{};
+    ImGuiWindowFlags m_viewportFlags{};
+    sf::RenderTexture* m_viewPortTex;
     
     void SetImGuiElements();
 };

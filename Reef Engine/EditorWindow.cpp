@@ -1,11 +1,14 @@
 #include "EditorWindow.h"
 #include "imgui.h"
 #include "imgui-SFML.h"
+#include "imgui_internal.h"
 #include "Object.h"
 
 void EditorWindow::Init()
 {
 	ImGui::SFML::Init(*m_window);
+
+	m_viewPortTex = new sf::RenderTexture(m_window->getSize());
 
 	m_window->setFramerateLimit(60);
 
@@ -22,6 +25,14 @@ void EditorWindow::Init()
 		ImGuiWindowFlags_NoMove |
 		ImGuiWindowFlags_NoResize |
 		ImGuiWindowFlags_NoBackground;
+
+	m_viewportFlags =
+		ImGuiWindowFlags_NoTitleBar |
+		ImGuiWindowFlags_NoCollapse |
+		ImGuiWindowFlags_NoScrollbar |
+		ImGuiWindowFlags_NoMove |
+		ImGuiWindowFlags_NoScrollWithMouse |
+		ImGuiWindowFlags_NoBringToFrontOnFocus;
 
 	m_windowScale = 100;
 }
@@ -40,15 +51,18 @@ void EditorWindow::Update(ObjectVec& objectsToRender)
 		}
 	}
 
-	SetImGuiElements();
-	m_window->clear();
-	ImGui::SFML::Render(*m_window); 
-
+	m_viewPortTex->clear();
 	for (Object*& object : objectsToRender)
 	{
-		m_window->draw(*object);
+		m_viewPortTex->draw(*object);
 	}
+	m_viewPortTex->display();
 
+
+	SetImGuiElements();
+
+	m_window->clear();
+	ImGui::SFML::Render(*m_window);
 	m_window->display();
 }
 
@@ -85,6 +99,15 @@ void EditorWindow::SetImGuiElements()
 	ImGui::SameLine(0.0f, spacing);
 	if (ImGui::ArrowButton("-", ImGuiDir_Up)) { m_windowScale++; m_window->setSize({ m_windowScale * 16, m_windowScale * 9 }); }
 	ImGui::PopItemFlag();
-
 	ImGui::End();
+
+	ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0, 0));
+	ImGui::PushStyleVar(ImGuiStyleVar_WindowRounding, 0.0f);
+	ImGui::Begin("Viewport", nullptr, m_viewportFlags);
+
+	ImVec2 viewportSize = ImGui::GetContentRegionAvail();
+	ImGui::Image(m_viewPortTex->getTexture().getNativeHandle(), viewportSize, ImVec2{0, 1}, ImVec2{1, 0});
+	
+	ImGui::End();
+	ImGui::PopStyleVar(2);
 }

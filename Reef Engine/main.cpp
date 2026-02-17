@@ -9,6 +9,7 @@
 
 int main()
 {
+
 	EditorWindow window(100, "Reef Engine");
 	window.Init();
 
