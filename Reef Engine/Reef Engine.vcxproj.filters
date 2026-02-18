@@ -16,9 +16,6 @@
     <Filter Include="Source Files\ImGui">
       <UniqueIdentifier>{d62ed636-051f-443b-9b8c-a8366fcc12c2}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\EngineStates">
-      <UniqueIdentifier>{bd9eb9bd-b524-4f53-b4ce-1c5023114280}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -77,13 +74,10 @@
     <ClInclude Include="Script.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="EngineState.h">
-      <Filter>Header Files\EngineStates</Filter>
+    <ClInclude Include="SpriteUtils.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="EditorEngine.h">
-      <Filter>Header Files\EngineStates</Filter>
-    </ClInclude>
-    <ClInclude Include="SpriteUtils.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

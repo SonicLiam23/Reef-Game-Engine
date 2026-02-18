@@ -3,11 +3,14 @@
 #include "imgui-SFML.h"
 #include "imgui_internal.h"
 #include "Object.h"
+#include "EditorEngine.h"
 
 #include <iostream>
 
-void EditorWindow::Init()
+void EditorWindow::Start(EditorEngine* engine)
 {
+	m_attachedEngine = engine;
+
 	ImGui::SFML::Init(*m_window);
 
 	m_viewPortTex = new sf::RenderTexture(m_window->getSize());
@@ -103,7 +106,10 @@ void EditorWindow::SetImGuiElements()
 
 	if (ImGui::Button("Add Object", m_buttonSize))
 	{
-		std::cout << "Pressed\n";
+		Object* obj = new Object();
+		//obj->SetPosition({ 32, 32 });
+		obj->SetSize({ 64, 64 });
+		m_attachedEngine->AddObject(obj);
 	}
 	if (ImGui::IsItemHovered(ImGuiHoveredFlags_Stationary))
 		ImGui::SetTooltip("Adds an empty square to the screen.");

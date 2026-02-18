@@ -10,7 +10,7 @@ void EditorEngine::Start(int windowScale, std::string windowName)
 {
 
 	m_window = new EditorWindow(windowScale, windowName);
-	m_window->Init();
+	m_window->Start(this);
 
 	m_isRunning = true;
 }
@@ -18,6 +18,12 @@ void EditorEngine::Start(int windowScale, std::string windowName)
 void EditorEngine::Update()
 {
 	m_window->Update(m_objects);
+	// do not run update on the objects themselves, this is the editor
+	// detect which object to select
+	for (Object* obj : m_objects)
+	{
+
+	}
 }
 
 void EditorEngine::End()

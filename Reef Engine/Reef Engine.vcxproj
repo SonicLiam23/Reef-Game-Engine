@@ -147,7 +147,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="EditorEngine.h" />
-    <ClInclude Include="EngineState.h" />
     <ClInclude Include="EngineTypes.h" />
     <ClInclude Include="EditorWindow.h" />
     <ClInclude Include="Object.h" />

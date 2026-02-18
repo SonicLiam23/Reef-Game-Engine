@@ -4,13 +4,14 @@
 #include "EngineTypes.h"
 #include <unordered_map>
 
+class EditorEngine; class Object;
 // contains the Editor OS window and the ImGui windows inside it.
 class EditorWindow :
     public Window
 {
 public:
     using Window::Window;
-    void Init();
+    void Start(EditorEngine* engine);
     void Update(ObjectVec& objectsToRender) override;
 
 
@@ -20,6 +21,8 @@ private:
     ImGuiWindowFlags m_dockspaceflags{};
     ImGuiWindowFlags m_viewportFlags{};
     sf::RenderTexture* m_viewPortTex;
+    EditorEngine* m_attachedEngine;
+    Object* m_selectedObject;
 
     std::unordered_map<Object*, sf::RectangleShape> m_outlines;
     

@@ -1,5 +1,5 @@
 #pragma once
-#include "EngineState.h"
+#include <string>
 #include "EngineTypes.h"
 class EditorWindow;
 class EditorEngine
