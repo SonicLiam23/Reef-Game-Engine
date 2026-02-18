@@ -5,26 +5,46 @@
 #include "Window.h"
 #include "EditorWindow.h"
 #include "EngineTypes.h"
+#include "EditorEngine.h"
 #include "Object.h"
+
 
 int main()
 {
+	// im lazy
+	using Engine = EditorEngine;
+#pragma region ENGINE_SETUP
+	Engine* engine = new Engine();
+	engine->Start();
+#pragma endregion
 
-	EditorWindow window(100, "Reef Engine");
-	window.Init();
-
+#pragma region OBJECT_SETUP
 	Object* testObj = new Object();
-	ObjectVec objects;
-	objects.push_back(testObj);
+	engine->AddObject(testObj);
 
 	testObj->SetTexture("Images/testimg.png");
 	testObj->SetPosition({ 400, 200 });
-	testObj->SetSize({ 5, 5 });
-	
-	while (window.Get()->isOpen())
+	testObj->SetSize({ 64, 64 });
+
+	Object* testObj2 = new Object();
+	engine->AddObject(testObj2);
+
+	testObj2->SetTexture("Images/testimg.png");
+	testObj2->SetPosition({ 400, 400 });
+	testObj2->SetSize({ 64, 64 });
+
+	Object* emptyObj = new Object();
+	emptyObj->SetPosition({500, 300});
+	emptyObj->SetSize({ 100, 100 });
+	engine->AddObject(emptyObj);
+#pragma endregion
+
+	Math::Vector2f newScale = testObj->GetSize();
+	while (engine->IsRunning())
 	{
-		testObj->SetPosition({ testObj->GetPosition().x + 1, testObj->GetPosition().y });
-		window.Update(objects);
+		testObj->SetSize({ newScale.x++, newScale.y });
+
+		engine->Update();
 	}
 
 	return 0;

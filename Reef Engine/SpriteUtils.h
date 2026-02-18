@@ -12,8 +12,6 @@ namespace
 		static TextureMap map;
 		return map;
 	}
-
-
 }
 
 namespace SpriteUtils

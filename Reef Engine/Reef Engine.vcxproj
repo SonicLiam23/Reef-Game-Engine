@@ -24,6 +24,7 @@
     <ProjectGuid>{35d14f32-bdf3-40b3-ab47-a67d8db8a81d}</ProjectGuid>
     <RootNamespace>ReefEngine</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+    <ProjectName>Reef Editor</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -132,7 +133,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="EditorEngine.cpp" />
-    <ClCompile Include="Engine.cpp" />
     <ClCompile Include="EditorWindow.cpp" />
     <ClCompile Include="imgui-SFML.cpp" />
     <ClCompile Include="imgui.cpp" />
@@ -147,13 +147,11 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="EditorEngine.h" />
-    <ClInclude Include="Engine.h" />
     <ClInclude Include="EngineState.h" />
     <ClInclude Include="EngineTypes.h" />
     <ClInclude Include="EditorWindow.h" />
     <ClInclude Include="Object.h" />
     <ClInclude Include="SpriteUtils.h" />
-    <ClInclude Include="RuntimeEngine.h" />
     <ClInclude Include="Script.h" />
     <ClInclude Include="Vector2.h" />
     <ClInclude Include="Window.h" />

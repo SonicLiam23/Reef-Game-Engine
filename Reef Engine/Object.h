@@ -12,10 +12,11 @@ public:
 	void Start();
 
 	void SetTexture(const std::string& imgPath);
-
 	void SetPosition(Math::Vector2f newPos);
 	void SetSize(Math::Vector2f newSize);
+	Math::Vector2f GetSize();
 	Math::Vector2f GetPosition();
+	Math::Vector2f GetMiddle();
 
 	~Object();
 
@@ -25,8 +26,19 @@ public:
 		return *m_sprite;
 	}
 
+
 private:
 	sf::Sprite* m_sprite;
 	ScriptVec m_scripts;
+
+	// object initialized with an empty sprite, but a sprite needs a texture
+	inline static sf::Texture& emptyTexture()
+	{
+		static sf::Image image;
+		image.resize({ 1, 1 });
+		image.setPixel({ 0, 0 }, sf::Color::Transparent);
+		static sf::Texture emptyTex(image);
+		return emptyTex;
+	}
 };
 

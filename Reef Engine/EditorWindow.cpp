@@ -4,6 +4,8 @@
 #include "imgui_internal.h"
 #include "Object.h"
 
+#include <iostream>
+
 void EditorWindow::Init()
 {
 	ImGui::SFML::Init(*m_window);
@@ -54,6 +56,16 @@ void EditorWindow::Update(ObjectVec& objectsToRender)
 	m_viewPortTex->clear();
 	for (Object*& object : objectsToRender)
 	{
+
+		sf::RectangleShape outline = m_outlines[object];
+		outline.setFillColor(sf::Color::Transparent);
+		outline.setOutlineColor(sf::Color::Yellow);
+		outline.setOutlineThickness(1);
+		outline.setSize(object->GetSize());
+		outline.setPosition(object->GetPosition());
+
+
+		m_viewPortTex->draw(outline);
 		m_viewPortTex->draw(*object);
 	}
 	m_viewPortTex->display();
@@ -64,6 +76,7 @@ void EditorWindow::Update(ObjectVec& objectsToRender)
 	m_window->clear();
 	ImGui::SFML::Render(*m_window);
 	m_window->display();
+
 }
 
 void EditorWindow::SetImGuiElements()
@@ -87,10 +100,13 @@ void EditorWindow::SetImGuiElements()
 	ImGui::Begin("Tools Bar", nullptr);
 
 	ImGui::BringWindowToDisplayFront(ImGui::GetCurrentWindow());
-	ImGui::Button("Add Image To Project", m_buttonSize);
-	ImGui::Button("Tooltip button", m_buttonSize);
+
+	if (ImGui::Button("Add Object", m_buttonSize))
+	{
+		std::cout << "Pressed\n";
+	}
 	if (ImGui::IsItemHovered(ImGuiHoveredFlags_Stationary))
-		ImGui::SetTooltip("I am a tooltip requiring mouse to be stationary before activating.");
+		ImGui::SetTooltip("Adds an empty square to the screen.");
 
 	ImGui::Text("WindowSize:");
 	ImGui::SameLine();

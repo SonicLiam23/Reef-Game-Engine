@@ -1,6 +1,7 @@
 #pragma once
 #include "SFML/Graphics.hpp"
 #include "Vector2.h"
+#include "EngineTypes.h"
 #include <string>
 
 class Window
@@ -9,6 +10,8 @@ public:
 	Window(unsigned int scale, std::string name);
 	~Window();
 	sf::RenderWindow* Get();
+
+	virtual void Update(ObjectVec& objects) = 0;
 
 protected:
 	sf::RenderWindow* m_window;
