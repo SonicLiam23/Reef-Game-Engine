@@ -5,6 +5,7 @@
 #include "Object.h"
 #include "EditorEngine.h"
 #include "Rect.h"
+#include "FileUtils.h"
 
 #include <iostream>
 
@@ -117,7 +118,8 @@ void EditorWindow::SetImGuiElements()
 	ImGui::End();
 #pragma endregion
 
-	ImGui::Begin("Tools Bar", nullptr);
+#pragma region TOOLS_BAR
+ImGui::Begin("Tools Bar", nullptr);
 
 	ImGui::BringWindowToDisplayFront(ImGui::GetCurrentWindow());
 
@@ -131,6 +133,7 @@ void EditorWindow::SetImGuiElements()
 	if (ImGui::IsItemHovered(ImGuiHoveredFlags_Stationary))
 		ImGui::SetTooltip("Adds an empty square to the screen.");
 
+#pragma region SELECTING_OBJECT
 	if (selectedObject)
 	{
 		ImGui::Text("Object:");
@@ -141,7 +144,16 @@ void EditorWindow::SetImGuiElements()
 
 		selectedObject->SetPosition(objRect.position);
 		selectedObject->SetSize(objRect.size);
+
+		if (ImGui::Button("Add Image", m_buttonSize))
+		{
+			selectedObject->SetTexture(FileUtils::GetImageAndCopyToProject());
+			selectedObject->SetSize(objRect.size);
+		}
 	}
+#pragma endregion
+
+	
 
 	ImGui::Text("WindowSize:");
 	ImGui::SameLine();
@@ -152,7 +164,11 @@ void EditorWindow::SetImGuiElements()
 	if (ImGui::ArrowButton("-", ImGuiDir_Up)) { m_windowScale++; m_window->setSize({ m_windowScale * 16, m_windowScale * 9 }); }
 	ImGui::PopItemFlag();
 	ImGui::End();
+#pragma endregion
 
+	
+
+#pragma region VIEWPORT
 	ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0, 0));
 	ImGui::PushStyleVar(ImGuiStyleVar_WindowRounding, 0.0f);
 	ImGui::Begin("Viewport", nullptr, m_viewportFlags);
@@ -167,6 +183,9 @@ void EditorWindow::SetImGuiElements()
 	
 	ImGui::End();
 	ImGui::PopStyleVar(2);
+#pragma endregion
+
+
 }
 
 

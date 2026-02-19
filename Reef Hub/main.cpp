@@ -1,7 +1,3 @@
-#include <Windows.h>
-#include <filesystem>
-#include <shobjidl.h>
-#include <commdlg.h> 
 #include <string>
 #include <sstream>
 #include <vector>
@@ -13,6 +9,7 @@
 #include "SFML/Graphics.hpp"
 #include <SFML/System/Clock.hpp>
 #include "json.hpp"
+#include "FileUtils.h"
 
 struct ProjectMetaData
 {
@@ -20,68 +17,6 @@ struct ProjectMetaData
 };
 NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(ProjectMetaData, projectName);
 
-
-std::string OpenFileExlorer(DWORD flags)
-{
-    // Initialize COM
-    CoInitialize(NULL);
-
-    // Create the file dialog object
-    IFileDialog* pfd = NULL;
-    HRESULT hr = CoCreateInstance(CLSID_FileOpenDialog, NULL, CLSCTX_ALL, IID_PPV_ARGS(&pfd));
-
-    if (SUCCEEDED(hr)) {
-        // Set the options of the dialog (folder select mode)
-        DWORD dwOptions;
-        pfd->GetOptions(&dwOptions);
-        pfd->SetOptions(dwOptions | flags);
-
-        // Show the dialog
-        hr = pfd->Show(NULL);
-
-        // Get the selected folder path
-        if (hr == S_OK) {
-            // Get the file path
-            IShellItem* pItem = NULL;
-            hr = pfd->GetResult(&pItem);
-            if (SUCCEEDED(hr)) {
-                PWSTR pszFilePath = NULL;
-                hr = pItem->GetDisplayName(SIGDN_FILESYSPATH, &pszFilePath);
-                if (SUCCEEDED(hr)) {
-                    // Convert wide string to a standard string
-                    std::wstring wstr(pszFilePath);
-                    std::string filePath(wstr.begin(), wstr.end());
-                    CoTaskMemFree(pszFilePath);
-                    pItem->Release();
-                    pfd->Release();
-                    CoUninitialize();
-                    return filePath;
-                }
-            }
-        }
-        pfd->Release();
-    }
-
-    CoUninitialize();
-    return "";  // Return empty string if canceled or failed
-}
-
-std::string GetFolderPath()
-{
-    return OpenFileExlorer(FOS_PICKFOLDERS);
-}
-
-std::string GetFilePath()
-{
-    return OpenFileExlorer(FOS_FILEMUSTEXIST);
-}
-
-std::filesystem::path GetExecutablePath()
-{
-    wchar_t buffer[MAX_PATH];
-    GetModuleFileNameW(nullptr, buffer, MAX_PATH);
-    return std::filesystem::path(buffer);
-}
 
 void CreateProject(std::string name, std::string filepath, std::string* screenOutput)
 {
@@ -96,7 +31,7 @@ void CreateProject(std::string name, std::string filepath, std::string* screenOu
         return;
     }
 
-    std::filesystem::path templatePath = GetExecutablePath().parent_path() / "ProjectTemplate";
+    std::filesystem::path templatePath = FileUtils::GetExecutablePath().parent_path() / "ProjectTemplate";
     std::filesystem::path destinationPath = filepath;
     
     ProjectMetaData data;
@@ -156,7 +91,7 @@ int main()
         ImGui::Begin(" ", nullptr, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoTitleBar);
         ImGui::Text("Create new Project:");
         if (ImGui::Button("Select Folder"))
-            currentPath = GetFolderPath();
+            currentPath = FileUtils::GetFolderPath();
         ImGui::TextWrapped(currentPath.c_str(), 123);
         ImGui::InputText("Project Name", projectName.data(), projectName.size());
         if (ImGui::Button("Create Project"))
