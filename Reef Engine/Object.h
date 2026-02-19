@@ -1,5 +1,6 @@
 #pragma once
 #include "Vector2.h"
+#include "Rect.h"
 #include "EngineTypes.h"
 #include "imgui-SFML.h"
 #include "SFML/Graphics.hpp"
@@ -17,6 +18,9 @@ public:
 	Math::Vector2f GetSize();
 	Math::Vector2f GetPosition();
 	Math::Vector2f GetMiddle();
+	Math::Rect GetRect();
+
+	bool IsColliding(Math::Vector2f point);
 
 	~Object();
 

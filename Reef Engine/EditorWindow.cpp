@@ -4,6 +4,7 @@
 #include "imgui_internal.h"
 #include "Object.h"
 #include "EditorEngine.h"
+#include "Rect.h"
 
 #include <iostream>
 
@@ -40,6 +41,8 @@ void EditorWindow::Start(EditorEngine* engine)
 		ImGuiWindowFlags_NoBringToFrontOnFocus;
 
 	m_windowScale = 100;
+
+	m_viewport.parent = this;
 }
 
 void EditorWindow::Update(ObjectVec& objectsToRender)
@@ -62,7 +65,15 @@ void EditorWindow::Update(ObjectVec& objectsToRender)
 
 		sf::RectangleShape outline = m_outlines[object];
 		outline.setFillColor(sf::Color::Transparent);
-		outline.setOutlineColor(sf::Color::Yellow);
+		if (object == selectedObject)
+		{
+			outline.setOutlineColor(sf::Color::Red);
+		}
+		else
+		{
+			outline.setOutlineColor(sf::Color::Yellow);
+		}
+		
 		outline.setOutlineThickness(1);
 		outline.setSize(object->GetSize());
 		outline.setPosition(object->GetPosition());
@@ -80,6 +91,12 @@ void EditorWindow::Update(ObjectVec& objectsToRender)
 	ImGui::SFML::Render(*m_window);
 	m_window->display();
 
+
+}
+
+EditorWindow::Viewport* EditorWindow::GetViewport()
+{
+	return &m_viewport;
 }
 
 void EditorWindow::SetImGuiElements()
@@ -114,6 +131,18 @@ void EditorWindow::SetImGuiElements()
 	if (ImGui::IsItemHovered(ImGuiHoveredFlags_Stationary))
 		ImGui::SetTooltip("Adds an empty square to the screen.");
 
+	if (selectedObject)
+	{
+		ImGui::Text("Object:");
+		Math::Rect objRect = selectedObject->GetRect();
+
+		ImGui::DragFloat2("Position", objRect.PositionData());
+		ImGui::DragFloat2("Size", objRect.SizeData());
+
+		selectedObject->SetPosition(objRect.position);
+		selectedObject->SetSize(objRect.size);
+	}
+
 	ImGui::Text("WindowSize:");
 	ImGui::SameLine();
 	float spacing = ImGui::GetStyle().ItemInnerSpacing.x;
@@ -130,7 +159,46 @@ void EditorWindow::SetImGuiElements()
 
 	ImVec2 viewportSize = ImGui::GetContentRegionAvail();
 	ImGui::Image(m_viewPortTex->getTexture().getNativeHandle(), viewportSize, ImVec2{0, 1}, ImVec2{1, 0});
+
+	// set the viewport info
+	m_viewport.position = ImGui::GetItemRectMin();
+	m_viewport.size = ImGui::GetItemRectSize();
+	m_viewport.mouseHovered = ImGui::IsItemHovered();
 	
 	ImGui::End();
 	ImGui::PopStyleVar(2);
+}
+
+
+//////////////////VIEWPORT////////////////
+
+std::optional<Math::Vector2f> EditorWindow::Viewport::GetMousePos()
+{
+	if (!mouseHovered)
+	{
+		return std::nullopt;
+	}
+
+	ImVec2 mousePos = ImGui::GetMousePos();
+
+	float localX = mousePos.x - position.x;
+	float localY = mousePos.y - position.y;
+
+	if (localX < 0.f || localY < 0.f ||
+		localX > size.x || localY > size.y)
+		return std::nullopt;
+
+	float renderWidth = (float)(parent->m_viewPortTex->getSize().x);
+	float renderHeight = (float)(parent->m_viewPortTex->getSize().y);
+
+	float scaleX = renderWidth / size.x;
+	float scaleY = renderHeight / size.y;
+
+	localX *= scaleX;
+	localY *= scaleY;
+
+	// Convert pixel space -> world space using SFML view
+	sf::Vector2f world = parent->m_window->mapPixelToCoords(sf::Vector2i(static_cast<int>(localX), static_cast<int>(localY)));
+
+	return Math::Vector2f(world.x, world.y);
 }

@@ -16,6 +16,7 @@ namespace Math
 		}
 		explicit Vector2f(const sf::Vector2f& v)
 			: x(v.x), y(v.y) {}
+
 	};
 	using Vector2 = Vector2f;
 

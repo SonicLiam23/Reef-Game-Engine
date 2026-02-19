@@ -4,29 +4,49 @@
 #include "EngineTypes.h"
 #include <unordered_map>
 
+
+
+
 class EditorEngine; class Object;
 // contains the Editor OS window and the ImGui windows inside it.
 class EditorWindow :
     public Window
 {
-public:
-    using Window::Window;
-    void Start(EditorEngine* engine);
-    void Update(ObjectVec& objectsToRender) override;
-
-
 private:
+    struct Viewport
+    {
+        EditorWindow* parent;
+        ImVec2 position;
+        ImVec2 size;
+        bool mouseHovered;
+
+        std::optional<Math::Vector2f> GetMousePos();
+    };
+
     ImVec2 m_buttonSize;
-    ImVec2 m_imGuiWindowSize;
     ImGuiWindowFlags m_dockspaceflags{};
     ImGuiWindowFlags m_viewportFlags{};
     sf::RenderTexture* m_viewPortTex;
     EditorEngine* m_attachedEngine;
-    Object* m_selectedObject;
+    Viewport m_viewport;
 
     std::unordered_map<Object*, sf::RectangleShape> m_outlines;
-    
+
     void SetImGuiElements();
+    
+    friend struct Viewport;
+
+public:
+    using Window::Window;
+    void Start(EditorEngine* engine);
+    void Update(ObjectVec& objectsToRender) override;
+    Object* selectedObject;
+    Viewport* GetViewport();
+
 };
+
+
+
+
 
  

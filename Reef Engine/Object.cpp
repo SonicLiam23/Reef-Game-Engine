@@ -1,8 +1,9 @@
 #include "Object.h"
 #include "Script.h"
 #include "SpriteUtils.h"
-#include <SFML/Graphics/Sprite.hpp>
-#include <SFML/Graphics/Texture.hpp>
+#include "SFML/Graphics/Sprite.hpp"
+#include "SFML/Graphics/Texture.hpp"
+#include "SFML/Graphics/Rect.hpp"
 
 Object::Object()
 {
@@ -59,6 +60,18 @@ Math::Vector2f Object::GetPosition()
 Math::Vector2f Object::GetMiddle()
 {
 	return (Math::Vector2f)m_sprite->getGlobalBounds().getCenter();
+}
+
+Math::Rect Object::GetRect()
+{
+	sf::Rect sfRect = m_sprite->getGlobalBounds();
+
+	return Math::Rect(sfRect.position.x, sfRect.position.y, sfRect.size.x, sfRect.size.y);
+}
+
+bool Object::IsColliding(Math::Vector2f point)
+{
+	return m_sprite->getGlobalBounds().contains(point);
 }
 
 void Object::Update()
