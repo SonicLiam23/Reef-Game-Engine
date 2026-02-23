@@ -1,0 +1,9 @@
+#pragma once
+#include "Window.h"
+#include "EngineTypes.h"
+#include "Script.h"
+#include "Object.h"
+#include "SpriteUtils.h"
+#include "FileUtils.h"
+#include "Vector2.h"
+#include "Rect.h"

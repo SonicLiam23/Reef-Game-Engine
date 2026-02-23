@@ -1,6 +1,8 @@
 #pragma once
 #include <string>
 #include "EngineTypes.h"
+#include "common.h"
+
 class EditorWindow;
 class EditorEngine
 {
