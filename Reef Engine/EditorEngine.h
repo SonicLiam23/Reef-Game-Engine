@@ -1,19 +1,23 @@
 #pragma once
 #include <string>
 #include "EngineTypes.h"
-#include "common.h"
+#include <unordered_map>
 
 class EditorWindow;
 class EditorEngine
 {
 public:
     EditorEngine();
+    ~EditorEngine();
     void Start(int windowScale = 100, std::string windowName = "Reef Engine");
     void Update();
     void End();
 
-    void AddObject(Object* objToAdd);
+    Object* AddObject(const std::string objName = "NO_NAME");
     bool IsRunning();
+
+    void SaveObjects();
+    void LoadObjects();
 
 private:
     EditorWindow* m_window;

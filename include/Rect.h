@@ -36,6 +36,7 @@ namespace Math
             return sf::FloatRect({ x, y }, { w, h });
         }
 
+        NLOHMANN_DEFINE_TYPE_INTRUSIVE(Rect, position, size)
 
 	};
 };

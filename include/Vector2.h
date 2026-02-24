@@ -1,5 +1,6 @@
 #pragma once
 #include "SFML/System/Vector2.hpp"
+#include "json.hpp"
 // allows the user to automatically use a Math::Vector2x when needing a sf::Vector2, but not use a sf::Vector2 in place of Math::Vector2
 namespace Math
 {
@@ -17,6 +18,8 @@ namespace Math
 		explicit Vector2f(const sf::Vector2f& v)
 			: x(v.x), y(v.y) {}
 
+		
+		NLOHMANN_DEFINE_TYPE_INTRUSIVE(Vector2f, x, y);
 	};
 	using Vector2 = Vector2f;
 
@@ -51,5 +54,7 @@ namespace Math
 		explicit Vector2i(const sf::Vector2i& v)
 			: x(v.x), y(v.y) {}
 	};
+
+	
 }
 

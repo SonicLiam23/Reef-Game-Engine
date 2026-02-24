@@ -14,9 +14,9 @@
 struct ProjectMetaData
 {
     std::string projectName;
+    
 };
 NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(ProjectMetaData, projectName);
-
 
 void CreateProject(std::string name, std::string filepath, std::string* screenOutput)
 {

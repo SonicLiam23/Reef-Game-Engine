@@ -16,8 +16,23 @@ namespace
 
 namespace SpriteUtils
 {
+	// sprite needs a texture
+	inline static sf::Texture& emptyTexture()
+	{
+		static sf::Image image;
+		image.resize({ 1, 1 });
+		image.setPixel({ 0, 0 }, sf::Color::Transparent);
+		static sf::Texture emptyTex(image);
+		return emptyTex;
+	}
+
 	inline sf::Texture& GetOrLoadTexture(const std::string& imagePath)
 	{
+		if (imagePath.empty())
+		{
+			return emptyTexture();
+		}
+
 		if (GetMap().find(imagePath) == GetMap().end())
 		{
 			sf::Texture texture;
@@ -31,11 +46,18 @@ namespace SpriteUtils
 		return GetMap()[imagePath];
 	}
 
-	inline sf::Sprite CreateSprite(const std::string& imagePath)
+	/// <summary>
+	/// UNSAFE: CALLS NEW, REMEMBER TO DELETE!!!!!!!!!!!!!!!
+	/// </summary>
+	/// <param name="imagePath"></param>
+	/// <returns></returns>
+	inline sf::Sprite* CreateSprite(const std::string& imagePath)
 	{
-		GetOrLoadTexture(imagePath);
+		sf::Texture& tex = GetOrLoadTexture(imagePath);
 
-		return sf::Sprite(GetMap()[imagePath]);
+		return new sf::Sprite(tex);
 	}
+
+
 }
 

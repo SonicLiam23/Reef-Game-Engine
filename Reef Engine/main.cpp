@@ -7,6 +7,9 @@
 #include "EngineTypes.h"
 #include "EditorEngine.h"
 #include "Object.h"
+#include <fstream>
+
+
 
 
 int main()
@@ -19,33 +22,35 @@ int main()
 #pragma endregion
 
 #pragma region OBJECT_SETUP
-	Object* testObj = new Object();
-	engine->AddObject(testObj);
+	/*Object* testObj = engine->AddObject();
+
 
 	testObj->SetTexture("Images/testimg.png");
 	testObj->SetPosition({ 400, 200 });
 	testObj->SetSize({ 64, 64 });
 
-	Object* testObj2 = new Object();
-	engine->AddObject(testObj2);
+	Object* testObj2 = 	engine->AddObject();
+
 
 	testObj2->SetTexture("Images/testimg.png");
 	testObj2->SetPosition({ 400, 400 });
 	testObj2->SetSize({ 64, 64 });
 
-	Object* emptyObj = new Object();
+	Object* emptyObj = engine->AddObject();
 	emptyObj->SetPosition({500, 300});
-	emptyObj->SetSize({ 100, 100 });
-	engine->AddObject(emptyObj);
+	emptyObj->SetSize({ 100, 100 });*/
+
 #pragma endregion
 
-	Math::Vector2f newScale = testObj->GetSize();
+	//Math::Vector2f newScale = testObj->GetSize();
 	while (engine->IsRunning())
 	{
-		testObj->SetSize({ newScale.x++, newScale.y });
+		//testObj->SetSize({ newScale.x++, newScale.y });
 
 		engine->Update();
 	}
+
+	delete engine;
 
 	return 0;
 }

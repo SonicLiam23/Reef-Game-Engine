@@ -56,14 +56,15 @@ void EditorWindow::Update(ObjectVec& objectsToRender)
 
 		if (event.is<sf::Event::Closed>())
 		{
+			m_attachedEngine->End();
 			m_window->close();
 		}
 	}
 
 	m_viewPortTex->clear();
-	for (Object*& object : objectsToRender)
+	for (ObjectUPtr& objectUptr: objectsToRender)
 	{
-
+		Object* object = objectUptr.get();
 		sf::RectangleShape outline = m_outlines[object];
 		outline.setFillColor(sf::Color::Transparent);
 		if (object == selectedObject)
@@ -75,10 +76,9 @@ void EditorWindow::Update(ObjectVec& objectsToRender)
 			outline.setOutlineColor(sf::Color::Yellow);
 		}
 		
-		outline.setOutlineThickness(1);
+		outline.setOutlineThickness(1.7);
 		outline.setSize(object->GetSize());
 		outline.setPosition(object->GetPosition());
-
 
 		m_viewPortTex->draw(outline);
 		m_viewPortTex->draw(*object);
@@ -125,10 +125,7 @@ ImGui::Begin("Tools Bar", nullptr);
 
 	if (ImGui::Button("Add Object", m_buttonSize))
 	{
-		Object* obj = new Object();
-		//obj->SetPosition({ 32, 32 });
-		obj->SetSize({ 64, 64 });
-		m_attachedEngine->AddObject(obj);
+		m_attachedEngine->AddObject();
 	}
 	if (ImGui::IsItemHovered(ImGuiHoveredFlags_Stationary))
 		ImGui::SetTooltip("Adds an empty square to the screen.");
@@ -136,7 +133,8 @@ ImGui::Begin("Tools Bar", nullptr);
 #pragma region SELECTING_OBJECT
 	if (selectedObject)
 	{
-		ImGui::Text("Object:");
+		ImGui::Text("Object:"); ImGui::SameLine();
+		ImGui::Text(selectedObject->name.c_str());
 		Math::Rect objRect = selectedObject->GetRect();
 
 		ImGui::DragFloat2("Position", objRect.PositionData());
