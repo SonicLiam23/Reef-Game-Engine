@@ -14,6 +14,9 @@ public:
     void End();
 
     Object* AddObject(const std::string objName = "NO_NAME");
+    void DestroyObject(const std::string& id);
+    void DestroyObject(Object* toDelete);
+
     bool IsRunning();
 
     void SaveObjects();

@@ -3,7 +3,7 @@
 #include "imgui.h"
 #include "EngineTypes.h"
 #include <unordered_map>
-
+#include "imgui_stdlib.h"
 
 
 
@@ -29,8 +29,16 @@ private:
     sf::RenderTexture* m_viewPortTex;
     EditorEngine* m_attachedEngine;
     Viewport m_viewport;
+    bool m_selectedObjectThisFrame;
+    Object* m_selectedObject;
 
     std::unordered_map<Object*, sf::RectangleShape> m_outlines;
+
+#pragma region VALUES_FOR_FIELDS
+    std::string m_inputID;
+    std::string inputName;
+#pragma endregion
+
 
     void SetImGuiElements();
     
@@ -40,7 +48,9 @@ public:
     using Window::Window;
     void Start(EditorEngine* engine);
     void Update(ObjectVec& objectsToRender) override;
-    Object* selectedObject;
+
+    void SetSelectedObject(Object* newSelected);
+    
     Viewport* GetViewport();
 
 };

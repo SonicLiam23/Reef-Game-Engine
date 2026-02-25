@@ -25,6 +25,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\include\EngineTypes.h" />
+    <ClInclude Include="..\include\FileUtils.h" />
     <ClInclude Include="..\include\Object.h" />
     <ClInclude Include="..\include\Rect.h" />
     <ClInclude Include="..\include\Reef-Common.h" />

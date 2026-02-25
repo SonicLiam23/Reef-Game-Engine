@@ -99,14 +99,23 @@ namespace FileUtils
 #ifdef _DEBUG
         std::filesystem::path engineDest = std::filesystem::path(IMAGES_PATH_PROJECT) / std::filesystem::path(filePath).filename();
         std::filesystem::create_directories(engineDest.parent_path());
-        std::filesystem::copy_file(filePath, engineDest, std::filesystem::copy_options::overwrite_existing);
+        if (!std::filesystem::exists(engineDest) || !std::filesystem::equivalent(filePath, engineDest))
+        {
+            std::filesystem::copy_file(filePath, engineDest, std::filesystem::copy_options::skip_existing);
+        }
+        
 #endif
 
         std::filesystem::path exeDest = GetExecutablePath().parent_path() / "Images" / std::filesystem::path(filePath).filename();
         std::filesystem::create_directories(exeDest.parent_path());
-        std::filesystem::copy_file(filePath, exeDest, std::filesystem::copy_options::overwrite_existing);
+        if (!std::filesystem::exists(exeDest) || !std::filesystem::equivalent(filePath, exeDest))
+        {
+            std::filesystem::copy_file(filePath, exeDest, std::filesystem::copy_options::skip_existing);
+        }
 
-        return filePath;
+        std::filesystem::path localPath = "Images" / exeDest.filename();
+
+        return localPath.string();
     }
 
 

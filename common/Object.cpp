@@ -5,6 +5,8 @@
 #include "SFML/Graphics/Texture.hpp"
 #include "SFML/Graphics/Rect.hpp"
 
+ObjectIDMap Object::objectIDMap;
+
 Object::Object()
 {
 
@@ -13,6 +15,16 @@ Object::Object()
 void Object::Start()
 {
 	m_sprite = SpriteUtils::CreateSprite(m_localImgPath);
+
+	if (m_rect.size.IsZero())
+	{
+		m_rect.size = { 64, 64 };
+	}
+	if (name.empty())
+	{
+		name = "NO_NAME";
+	}
+
 	ApplyRectToSprite();
 	// script starts will be ran on runtime
 }
@@ -62,6 +74,26 @@ Math::Rect Object::GetRect()
 std::string Object::GetImagePath()
 {
 	return m_localImgPath;
+}
+
+void Object::SetID(std::string newID)
+{
+	size_t ind = objectIDMap[m_id];
+	objectIDMap.erase(m_id);
+
+	while (objectIDMap.count(newID) > 0)
+	{
+		newID.append(" (1)");
+	}
+	
+	m_id = newID;
+	objectIDMap[newID] = ind;
+
+}
+
+std::string Object::GetID()
+{
+	return m_id;
 }
 
 bool Object::IsColliding(Math::Vector2f point)

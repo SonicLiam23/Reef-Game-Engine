@@ -51,6 +51,9 @@
     <ClCompile Include="TEST.cpp">
       <Filter>SERIALIZE CODE DO NOT USE YET</Filter>
     </ClCompile>
+    <ClCompile Include="imgui_stdlib.cpp">
+      <Filter>Source Files\ImGui</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="EditorWindow.h">

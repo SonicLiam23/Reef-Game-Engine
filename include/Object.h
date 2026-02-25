@@ -15,6 +15,8 @@ public:
 	void Update();
 	void Start();
 
+	static ObjectIDMap objectIDMap;
+
 	void SetTexture(const std::string& imgPath);
 	void SetPosition(Math::Vector2f newPos);
 	void SetSize(Math::Vector2f newSize);
@@ -23,11 +25,16 @@ public:
 	Math::Vector2f GetMiddle();
 	Math::Rect GetRect();
 	std::string GetImagePath();
+	bool IsColliding(Math::Vector2f point);
+	void SetID(std::string newID);
+	std::string GetID();
+
+
 	// public as i was going to add a Get and Set, with no extra validation
 	std::string name;
-	std::string id;
+	
 
-	bool IsColliding(Math::Vector2f point);
+	
 
 	~Object();
 
@@ -48,10 +55,10 @@ private:
 	ScriptVec m_scripts;
 	std::string m_localImgPath;
 	Math::Rect m_rect;
-
+	std::string m_id;
 	
 
 
-	NLOHMANN_DEFINE_TYPE_INTRUSIVE(Object, name, id, m_rect, m_localImgPath);
+	NLOHMANN_DEFINE_TYPE_INTRUSIVE(Object, name, m_id, m_rect, m_localImgPath);
 };
 

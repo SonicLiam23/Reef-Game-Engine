@@ -3,10 +3,11 @@
 #include "Object.h"
 #include <iostream>
 #include <fstream>
+#include <random>
 
 EditorEngine::EditorEngine() : m_isInitialized(false), m_isRunning(false)
 {
-
+	srand(time(NULL));
 }
 
 EditorEngine::~EditorEngine()
@@ -38,16 +39,15 @@ void EditorEngine::Update()
 
 	if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Left))
 	{
-		std::optional<Math::Vector2> mousePosOnViewport = m_window->GetViewport()->GetMousePos();
+		std::optional<Math::Vector2f> mousePosOnViewport = m_window->GetViewport()->GetMousePos();
 		
 		if (mousePosOnViewport)
 		{
-			m_window->selectedObject = nullptr;
 			for (ObjectUPtr& obj : m_objects)
 			{
 				if (obj->IsColliding(mousePosOnViewport.value()))
 				{
-					m_window->selectedObject = obj.get();
+					m_window->SetSelectedObject(obj.get());
 					break;
 				}
 			}
@@ -68,9 +68,43 @@ void EditorEngine::End()
 
 Object* EditorEngine::AddObject(const std::string objName)
 {
-	m_objects.emplace_back(std::make_unique<Object>());
-	m_objects.back().get()->name = objName;
-	return m_objects.back().get();
+	Object* obj = m_objects.emplace_back(std::make_unique<Object>()).get();
+
+	obj->name = objName;
+	obj->SetID(std::to_string(rand()));
+	Object::objectIDMap[obj->GetID()] = m_objects.size();
+
+	obj->Start();
+	return obj;
+}
+
+void EditorEngine::DestroyObject(const std::string& id)
+{
+	// O(1) deletion using IDs
+	if (Object::objectIDMap.count(id) == 0)
+	{
+		assert(false);
+		return;
+	}
+	size_t ind = Object::objectIDMap[id];
+	if (ind != m_objects.size() - 1)
+	{
+		// swapping with the back, so update the map
+		std::swap(m_objects[ind], m_objects.back());
+
+		// ind now holds the old back
+		Object* movedObj = m_objects[ind].get();
+		Object::objectIDMap[movedObj->GetID()] = ind;
+	}
+
+	// now remove the object to deletes ID from the map
+	Object::objectIDMap.erase(id);
+	m_objects.pop_back();
+}
+
+void EditorEngine::DestroyObject(Object* toDelete)
+{
+	DestroyObject(toDelete->GetID());
 }
 
 bool EditorEngine::IsRunning()
@@ -110,9 +144,7 @@ void EditorEngine::LoadObjects()
 		{
 			m_objects.push_back(std::move(obj));
 		}
-
 	}
-
 	file.close();
 }
 

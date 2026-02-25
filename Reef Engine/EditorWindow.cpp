@@ -9,6 +9,18 @@
 
 #include <iostream>
 
+void HelpMarker(const char* desc)
+{
+	ImGui::TextDisabled("(?)");
+	if (ImGui::BeginItemTooltip())
+	{
+		ImGui::PushTextWrapPos(ImGui::GetFontSize() * 35.0f);
+		ImGui::TextUnformatted(desc);
+		ImGui::PopTextWrapPos();
+		ImGui::EndTooltip();
+	}
+}
+
 void EditorWindow::Start(EditorEngine* engine)
 {
 	m_attachedEngine = engine;
@@ -44,6 +56,8 @@ void EditorWindow::Start(EditorEngine* engine)
 	m_windowScale = 100;
 
 	m_viewport.parent = this;
+	
+	m_selectedObjectThisFrame = false;
 }
 
 void EditorWindow::Update(ObjectVec& objectsToRender)
@@ -67,7 +81,7 @@ void EditorWindow::Update(ObjectVec& objectsToRender)
 		Object* object = objectUptr.get();
 		sf::RectangleShape outline = m_outlines[object];
 		outline.setFillColor(sf::Color::Transparent);
-		if (object == selectedObject)
+		if (object == m_selectedObject)
 		{
 			outline.setOutlineColor(sf::Color::Red);
 		}
@@ -92,7 +106,7 @@ void EditorWindow::Update(ObjectVec& objectsToRender)
 	ImGui::SFML::Render(*m_window);
 	m_window->display();
 
-
+	m_selectedObjectThisFrame = false;
 }
 
 EditorWindow::Viewport* EditorWindow::GetViewport()
@@ -119,7 +133,7 @@ void EditorWindow::SetImGuiElements()
 #pragma endregion
 
 #pragma region TOOLS_BAR
-ImGui::Begin("Tools Bar", nullptr);
+	ImGui::Begin("Tools Bar", nullptr);
 
 	ImGui::BringWindowToDisplayFront(ImGui::GetCurrentWindow());
 
@@ -131,27 +145,45 @@ ImGui::Begin("Tools Bar", nullptr);
 		ImGui::SetTooltip("Adds an empty square to the screen.");
 
 #pragma region SELECTING_OBJECT
-	if (selectedObject)
+	if (m_selectedObject)
 	{
+		if (m_selectedObjectThisFrame)
+		{
+			m_inputID = m_selectedObject->GetID();
+		}
 		ImGui::Text("Object:"); ImGui::SameLine();
-		ImGui::Text(selectedObject->name.c_str());
-		Math::Rect objRect = selectedObject->GetRect();
+		ImGui::Text(m_selectedObject->name.c_str());
+
+
+		ImGui::InputText("Name", &m_selectedObject->name);
+
+		ImGui::InputText("ID", &m_inputID);
+		if (ImGui::Button("Set ID", m_buttonSize))
+		{
+			m_selectedObject->SetID(m_inputID);
+			// update text box with new ID (input validation may change it)
+			m_inputID = m_selectedObject->GetID();
+		}
+		ImGui::SameLine(); HelpMarker("IDs Must be unique");
+
+
+		Math::Rect objRect = m_selectedObject->GetRect();
 
 		ImGui::DragFloat2("Position", objRect.PositionData());
 		ImGui::DragFloat2("Size", objRect.SizeData());
 
-		selectedObject->SetPosition(objRect.position);
-		selectedObject->SetSize(objRect.size);
+		m_selectedObject->SetPosition(objRect.position);
+		m_selectedObject->SetSize(objRect.size);
 
 		if (ImGui::Button("Add Image", m_buttonSize))
 		{
-			selectedObject->SetTexture(FileUtils::GetImageAndCopyToProject());
-			selectedObject->SetSize(objRect.size);
+			m_selectedObject->SetTexture(FileUtils::GetImageAndCopyToProject());
+			m_selectedObject->SetSize(objRect.size);
 		}
 	}
 #pragma endregion
 
-	
+
 
 	ImGui::Text("WindowSize:");
 	ImGui::SameLine();
@@ -164,7 +196,7 @@ ImGui::Begin("Tools Bar", nullptr);
 	ImGui::End();
 #pragma endregion
 
-	
+
 
 #pragma region VIEWPORT
 	ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0, 0));
@@ -172,18 +204,24 @@ ImGui::Begin("Tools Bar", nullptr);
 	ImGui::Begin("Viewport", nullptr, m_viewportFlags);
 
 	ImVec2 viewportSize = ImGui::GetContentRegionAvail();
-	ImGui::Image(m_viewPortTex->getTexture().getNativeHandle(), viewportSize, ImVec2{0, 1}, ImVec2{1, 0});
+	ImGui::Image(m_viewPortTex->getTexture().getNativeHandle(), viewportSize, ImVec2{ 0, 1 }, ImVec2{ 1, 0 });
 
 	// set the viewport info
 	m_viewport.position = ImGui::GetItemRectMin();
 	m_viewport.size = ImGui::GetItemRectSize();
 	m_viewport.mouseHovered = ImGui::IsItemHovered();
-	
+
 	ImGui::End();
 	ImGui::PopStyleVar(2);
 #pragma endregion
 
 
+}
+
+void EditorWindow::SetSelectedObject(Object* newSelected)
+{
+	m_selectedObject = newSelected;
+	m_selectedObjectThisFrame = true;
 }
 
 

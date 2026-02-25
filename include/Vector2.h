@@ -4,57 +4,33 @@
 // allows the user to automatically use a Math::Vector2x when needing a sf::Vector2, but not use a sf::Vector2 in place of Math::Vector2
 namespace Math
 {
-	struct Vector2f
+	template <typename T = float>
+	struct Vector2
 	{
-		float x{}, y{};
+		T x, y;
 
-		constexpr Vector2f() = default;
-		constexpr Vector2f(float _x, float _y) : x(_x), y(_y) {}
-
-		operator sf::Vector2f() const
+		constexpr Vector2() = default;
+		constexpr Vector2(T _x, T _y) : x(_x), y(_y) {}
+		inline constexpr bool IsZero()
 		{
-			return sf::Vector2f(x, y);
-		}
-		explicit Vector2f(const sf::Vector2f& v)
-			: x(v.x), y(v.y) {}
-
-		
-		NLOHMANN_DEFINE_TYPE_INTRUSIVE(Vector2f, x, y);
-	};
-	using Vector2 = Vector2f;
-
-	struct Vector2u
-	{
-		unsigned int x{}, y{};
-
-		constexpr Vector2u() = default;
-		constexpr Vector2u(float _x, float _y) : x(_x), y(_y) {}
-
-		operator sf::Vector2u() const
-		{
-			return sf::Vector2u(x, y);
+			return x == 0 && y == 0;
 		}
 
-		explicit Vector2u(const sf::Vector2u& v)
-			: x(v.x), y(v.y) {}
-	};
-
-	struct Vector2i
-	{
-		int x{}, y{};
-
-		constexpr Vector2i() = default;
-		constexpr Vector2i(int _x, int _y) : x(_x), y(_y) {}
-
-		operator sf::Vector2i() const
+		operator sf::Vector2<T>() const
 		{
-			return sf::Vector2i(x, y);
+			return sf::Vector2<T>(x, y);
+		}
+		explicit Vector2(const sf::Vector2<T>& v)
+			: x(v.x), y(v.y) {
 		}
 
-		explicit Vector2i(const sf::Vector2i& v)
-			: x(v.x), y(v.y) {}
+
+		NLOHMANN_DEFINE_TYPE_INTRUSIVE(Vector2, x, y);
 	};
 
-	
+
+	using Vector2f = Vector2<float>;
+	using Vector2u = Vector2<unsigned int>;
+	using Vector2i = Vector2<int>;
 }
 

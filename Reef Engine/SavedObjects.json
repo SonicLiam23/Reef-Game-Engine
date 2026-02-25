@@ -1,47 +1,32 @@
 [
     {
-        "id": "",
-        "m_localImgPath": "G:\\Uni Work\\Reef Game Engine TESTING FOLDER\\Screenshot 2024-02-01 210252.jpg",
+        "m_id": "test",
+        "m_localImgPath": "",
         "m_rect": {
             "position": {
-                "x": 892.0,
-                "y": 239.0
+                "x": 234.0,
+                "y": 373.0
             },
             "size": {
-                "x": 247.0,
-                "y": 613.0
-            }
-        },
-        "name": "Obj1"
-    },
-    {
-        "id": "",
-        "m_localImgPath": "Images/testimg.png",
-        "m_rect": {
-            "position": {
-                "x": 258.0,
-                "y": 526.0
-            },
-            "size": {
-                "x": 204.0,
+                "x": 64.0,
                 "y": 64.0
             }
         },
-        "name": "Obj2"
+        "name": "NO_NAME"
     },
     {
-        "id": "",
-        "m_localImgPath": "G:\\Uni Work\\Reef Game Engine TESTING FOLDER\\noFilter.png",
+        "m_id": "test",
+        "m_localImgPath": "",
         "m_rect": {
             "position": {
-                "x": 600.0,
-                "y": 36.0
+                "x": 0.0,
+                "y": 0.0
             },
             "size": {
-                "x": 177.0,
-                "y": 217.0
+                "x": 64.0,
+                "y": 64.0
             }
         },
-        "name": "EmptyObject"
+        "name": "NO_NAME"
     }
 ]

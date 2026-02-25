@@ -18,7 +18,7 @@ namespace Math
         inline float* PositionData() { return &position.x; }
         inline float* SizeData() { return &size.x; }
 
-        inline bool Contains(const Vector2& point) const
+        inline bool Contains(const Vector2f& point) const
         {
             return point.x >= x &&
                 point.x <= x + w &&
@@ -34,6 +34,17 @@ namespace Math
         operator sf::FloatRect() const
         {
             return sf::FloatRect({ x, y }, { w, h });
+        }
+
+        Math::Rect& operator =(const Math::Rect& other)
+        {
+            if (this == &other)
+                return *this;
+
+            position = other.position;
+            size = other.size;
+
+            return *this;
         }
 
         NLOHMANN_DEFINE_TYPE_INTRUSIVE(Rect, position, size)
