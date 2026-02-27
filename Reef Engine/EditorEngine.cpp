@@ -39,17 +39,6 @@ void EditorEngine::Start(int windowScale, std::string windowName)
 
 void EditorEngine::Update()
 {
-	for (int i = 0; i < m_objects.size(); ++i)
-	{
-		ObjectUPtr& obj = m_objects[i];
-		if (obj->MarkedForDeletion())
-		{
-			DestroyObject(obj->GetID());
-			m_window->SetSelectedObject(nullptr);
-			--i;
-		}
-	}
-
 	m_window->Update(m_objects);
 	// do not run update on the objects themselves, this is the editor
 	// detect which object to select
@@ -69,6 +58,17 @@ void EditorEngine::Update()
 					break;
 				}
 			}
+		}
+	}
+
+	for (int i = 0; i < m_objects.size(); ++i)
+	{
+		ObjectUPtr& obj = m_objects[i];
+		if (obj->MarkedForDeletion())
+		{
+			DestroyObject(obj->GetID());
+			m_window->SetSelectedObject(nullptr);
+			--i;
 		}
 	}
 }
