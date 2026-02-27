@@ -6,7 +6,6 @@
 #include "SFML/Graphics.hpp"
 #include "json.hpp"
 
-class EditorEngine;
 
 class Object : public sf::Drawable
 {
@@ -26,8 +25,8 @@ public:
 	bool IsColliding(Math::Vector2f point);
 	void SetID(std::string newID);
 	std::string GetID();
-
 	void Destroy();
+	bool MarkedForDeletion();
 
 
 	// public as i was going to add a Get and Set, with no extra validation
@@ -49,7 +48,7 @@ private:
 	std::string m_localImgPath;
 	Math::Rect m_rect;
 	std::string m_id;
-	EditorEngine* m_attachedEngine;
+	bool m_markedForDeletion;
 	
 	inline void draw(sf::RenderTarget& target, sf::RenderStates states) const override
 	{

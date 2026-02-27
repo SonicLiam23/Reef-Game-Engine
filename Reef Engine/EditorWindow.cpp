@@ -179,6 +179,11 @@ void EditorWindow::SetImGuiElements()
 			m_selectedObject->SetTexture(FileUtils::GetImageAndCopyToProject());
 			m_selectedObject->SetSize(objRect.size);
 		}
+
+		if (ImGui::Button("Delete Object", m_buttonSize))
+		{
+			m_selectedObject->Destroy();
+		}
 	}
 #pragma endregion
 

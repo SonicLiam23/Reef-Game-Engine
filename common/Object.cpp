@@ -7,7 +7,7 @@
 ObjectIDMap Object::IDMap;
 
 
-Object::Object() :  m_sprite(SpriteUtils::emptyTexture())
+Object::Object() :  m_sprite(SpriteUtils::emptyTexture()), m_markedForDeletion(false)
 {
 }
 
@@ -26,6 +26,9 @@ void Object::Start()
 
 	ApplyRectToSprite();
 	// script starts will be ran on runtime
+
+	// if user edits save file so 2 objects have the same ID, ensure its overridden
+	SetID(m_id);
 }
 
 void Object::SetTexture(const std::string& imgPath)
@@ -77,19 +80,22 @@ std::string Object::GetImagePath()
 
 void Object::SetID(std::string newID)
 {
+	std::string temp = newID;
+	int count = 1;
+
+	while (IDMap.find(temp) != IDMap.end())
+	{
+		temp = newID + std::to_string(count);
+		++count;
+	}
+
+	newID = temp;
+
 	size_t ind = IDMap[m_id];
 	IDMap.erase(m_id);
 
-	int i = 1;
-	while (IDMap.count(newID) > 0)
-	{
-		newID.append(std::to_string(i));
-		i++;
-	}
-	
 	m_id = newID;
 	IDMap[newID] = ind;
-
 }
 
 std::string Object::GetID()
@@ -99,7 +105,12 @@ std::string Object::GetID()
 
 void Object::Destroy()
 {
-	EditorEngine::Get()
+	m_markedForDeletion = true;
+}
+
+bool Object::MarkedForDeletion()
+{
+	return m_markedForDeletion;
 }
 
 bool Object::IsColliding(Math::Vector2f point)

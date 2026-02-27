@@ -39,6 +39,17 @@ void EditorEngine::Start(int windowScale, std::string windowName)
 
 void EditorEngine::Update()
 {
+	for (int i = 0; i < m_objects.size(); ++i)
+	{
+		ObjectUPtr& obj = m_objects[i];
+		if (obj->MarkedForDeletion())
+		{
+			DestroyObject(obj->GetID());
+			m_window->SetSelectedObject(nullptr);
+			--i;
+		}
+	}
+
 	m_window->Update(m_objects);
 	// do not run update on the objects themselves, this is the editor
 	// detect which object to select
@@ -49,6 +60,7 @@ void EditorEngine::Update()
 		
 		if (mousePosOnViewport)
 		{
+			m_window->SetSelectedObject(nullptr);
 			for (ObjectUPtr& obj : m_objects)
 			{
 				if (obj->IsColliding(mousePosOnViewport.value()))
@@ -78,7 +90,7 @@ Object* EditorEngine::AddObject(const std::string objName)
 
 	obj->name = objName;
 	obj->SetID(std::to_string(rand()));
-	objectIDMap[obj->GetID()] = m_objects.size();
+	Object::IDMap[obj->GetID()] = m_objects.size() - 1;
 
 	obj->Start();
 	return obj;
@@ -87,12 +99,12 @@ Object* EditorEngine::AddObject(const std::string objName)
 void EditorEngine::DestroyObject(const std::string& id)
 {
 	// O(1) deletion using IDs
-	if (objectIDMap.count(id) == 0)
+	if (Object::IDMap.count(id) == 0)
 	{
 		assert(false);
 		return;
 	}
-	size_t ind = objectIDMap[id];
+ 	size_t ind = Object::IDMap[id];
 	if (ind != m_objects.size() - 1)
 	{
 		// swapping with the back, so update the map
@@ -100,11 +112,11 @@ void EditorEngine::DestroyObject(const std::string& id)
 
 		// ind now holds the old back
 		Object* movedObj = m_objects[ind].get();
-		objectIDMap[movedObj->GetID()] = ind;
+		Object::IDMap[movedObj->GetID()] = ind;
 	}
 
 	// now remove the object to deletes ID from the map
-	objectIDMap.erase(id);
+	Object::IDMap.erase(id);
 	m_objects.pop_back();
 }
 
@@ -148,7 +160,9 @@ void EditorEngine::LoadObjects()
 		ObjectUPtr obj = std::make_unique<Object>(std::move(objFromJson));
 		if (obj)
 		{
-			m_objects.push_back(std::move(obj));
+			// do this before because when we std::move the ptr wont be in the same place, so I dont need to subtract one.
+			Object::IDMap[obj->GetID()] = m_objects.size();
+			m_objects.push_back(std::move(obj)); 
 		}
 	}
 	file.close();

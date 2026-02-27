@@ -24,7 +24,6 @@ public:
     void SaveObjects();
     void LoadObjects();
 
-    ObjectIDMap objectIDMap;
 private:
     EditorEngine();
     ~EditorEngine();

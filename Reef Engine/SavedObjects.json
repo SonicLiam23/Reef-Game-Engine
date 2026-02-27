@@ -1,32 +1,17 @@
 [
     {
-        "m_id": "test",
+        "m_id": "test1211",
         "m_localImgPath": "",
         "m_rect": {
             "position": {
-                "x": 411.0,
-                "y": 519.0
-            },
-            "size": {
-                "x": 650.0,
-                "y": 64.0
-            }
-        },
-        "name": "NO_NAME"
-    },
-    {
-        "m_id": "test",
-        "m_localImgPath": "",
-        "m_rect": {
-            "position": {
-                "x": 557.0,
-                "y": 143.0
+                "x": 420.0,
+                "y": 235.0
             },
             "size": {
                 "x": 64.0,
                 "y": 64.0
             }
         },
-        "name": "NO_NAME"
+        "name": "help"
     }
 ]
