@@ -51,11 +51,11 @@ namespace SpriteUtils
 	/// </summary>
 	/// <param name="imagePath"></param>
 	/// <returns></returns>
-	inline sf::Sprite* CreateSprite(const std::string& imagePath)
+	inline sf::Sprite CreateSprite(const std::string& imagePath)
 	{
 		sf::Texture& tex = GetOrLoadTexture(imagePath);
 
-		return new sf::Sprite(tex);
+		return sf::Sprite(tex);
 	}
 
 

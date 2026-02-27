@@ -4,12 +4,11 @@
 #include "SFML/Graphics/Sprite.hpp"
 #include "SFML/Graphics/Texture.hpp"
 #include "SFML/Graphics/Rect.hpp"
+ObjectIDMap Object::IDMap;
 
-ObjectIDMap Object::objectIDMap;
 
-Object::Object()
+Object::Object() :  m_sprite(SpriteUtils::emptyTexture())
 {
-
 }
 
 void Object::Start()
@@ -33,8 +32,8 @@ void Object::SetTexture(const std::string& imgPath)
 {
 	sf::Texture& texture = SpriteUtils::GetOrLoadTexture(imgPath);
 	// if texture.getSize() is a unsigned int, if the value is more than UINT_MAX I will be very very surprised.
-	m_sprite->setTextureRect(sf::IntRect({ 0, 0 }, { (int)texture.getSize().x, (int)texture.getSize().y }));
-	m_sprite->setTexture(texture);
+	m_sprite.setTextureRect(sf::IntRect({ 0, 0 }, { (int)texture.getSize().x, (int)texture.getSize().y }));
+	m_sprite.setTexture(texture);
 	m_localImgPath = imgPath;
 
 }
@@ -42,7 +41,7 @@ void Object::SetTexture(const std::string& imgPath)
 void Object::SetPosition(Math::Vector2f newPos)
 {
 	m_rect.position = newPos;
-	m_sprite->setPosition(newPos);
+	m_sprite.setPosition(newPos);
 }
 
 void Object::SetSize(Math::Vector2f newSize)
@@ -63,7 +62,7 @@ Math::Vector2f Object::GetPosition()
 
 Math::Vector2f Object::GetMiddle()
 {
-	return (Math::Vector2f)m_sprite->getGlobalBounds().getCenter();
+	return (Math::Vector2f)m_sprite.getGlobalBounds().getCenter();
 }
 
 Math::Rect Object::GetRect()
@@ -78,16 +77,18 @@ std::string Object::GetImagePath()
 
 void Object::SetID(std::string newID)
 {
-	size_t ind = objectIDMap[m_id];
-	objectIDMap.erase(m_id);
+	size_t ind = IDMap[m_id];
+	IDMap.erase(m_id);
 
-	while (objectIDMap.count(newID) > 0)
+	int i = 1;
+	while (IDMap.count(newID) > 0)
 	{
-		newID.append(" (1)");
+		newID.append(std::to_string(i));
+		i++;
 	}
 	
 	m_id = newID;
-	objectIDMap[newID] = ind;
+	IDMap[newID] = ind;
 
 }
 
@@ -96,9 +97,14 @@ std::string Object::GetID()
 	return m_id;
 }
 
+void Object::Destroy()
+{
+	EditorEngine::Get()
+}
+
 bool Object::IsColliding(Math::Vector2f point)
 {
-	return m_sprite->getGlobalBounds().contains(point);
+	return m_sprite.getGlobalBounds().contains(point);
 }
 
 void Object::Update()
@@ -111,17 +117,17 @@ void Object::Update()
 
 Object::~Object()
 {
-	delete m_sprite;
+
 }
 
 void Object::ApplyRectToSprite()
 {
 	Math::Vector2f targetScale{};
-	const sf::Vector2f size = m_sprite->getLocalBounds().size;
+	const sf::Vector2f size = m_sprite.getLocalBounds().size;
 	targetScale.x = m_rect.size.x / size.x;
 	targetScale.y = m_rect.size.y / size.y;
 
-	m_sprite->setScale(targetScale);
+	m_sprite.setScale(targetScale);
 
-	m_sprite->setPosition(m_rect.position);
+	m_sprite.setPosition(m_rect.position);
 }

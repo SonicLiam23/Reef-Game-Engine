@@ -6,7 +6,6 @@
 #include "EditorEngine.h"
 #include "Rect.h"
 #include "FileUtils.h"
-
 #include <iostream>
 
 void HelpMarker(const char* desc)

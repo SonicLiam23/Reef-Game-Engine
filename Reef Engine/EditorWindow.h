@@ -34,10 +34,8 @@ private:
 
     std::unordered_map<Object*, sf::RectangleShape> m_outlines;
 
-#pragma region VALUES_FOR_FIELDS
+    // values for input fields
     std::string m_inputID;
-    std::string inputName;
-#pragma endregion
 
 
     void SetImGuiElements();

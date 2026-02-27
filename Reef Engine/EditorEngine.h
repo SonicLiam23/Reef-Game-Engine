@@ -7,8 +7,10 @@ class EditorWindow;
 class EditorEngine
 {
 public:
-    EditorEngine();
-    ~EditorEngine();
+    // singleton
+    static EditorEngine& Get();
+
+
     void Start(int windowScale = 100, std::string windowName = "Reef Engine");
     void Update();
     void End();
@@ -22,7 +24,11 @@ public:
     void SaveObjects();
     void LoadObjects();
 
+    ObjectIDMap objectIDMap;
 private:
+    EditorEngine();
+    ~EditorEngine();
+
     EditorWindow* m_window;
     ObjectVec m_objects;
 

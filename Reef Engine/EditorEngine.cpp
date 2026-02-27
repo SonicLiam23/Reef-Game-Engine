@@ -15,6 +15,12 @@ EditorEngine::~EditorEngine()
 	delete m_window;
 }
 
+EditorEngine& EditorEngine::Get()
+{
+	static EditorEngine instance;
+	return instance;
+}
+
 void EditorEngine::Start(int windowScale, std::string windowName)
 {
 
@@ -72,7 +78,7 @@ Object* EditorEngine::AddObject(const std::string objName)
 
 	obj->name = objName;
 	obj->SetID(std::to_string(rand()));
-	Object::objectIDMap[obj->GetID()] = m_objects.size();
+	objectIDMap[obj->GetID()] = m_objects.size();
 
 	obj->Start();
 	return obj;
@@ -81,12 +87,12 @@ Object* EditorEngine::AddObject(const std::string objName)
 void EditorEngine::DestroyObject(const std::string& id)
 {
 	// O(1) deletion using IDs
-	if (Object::objectIDMap.count(id) == 0)
+	if (objectIDMap.count(id) == 0)
 	{
 		assert(false);
 		return;
 	}
-	size_t ind = Object::objectIDMap[id];
+	size_t ind = objectIDMap[id];
 	if (ind != m_objects.size() - 1)
 	{
 		// swapping with the back, so update the map
@@ -94,11 +100,11 @@ void EditorEngine::DestroyObject(const std::string& id)
 
 		// ind now holds the old back
 		Object* movedObj = m_objects[ind].get();
-		Object::objectIDMap[movedObj->GetID()] = ind;
+		objectIDMap[movedObj->GetID()] = ind;
 	}
 
 	// now remove the object to deletes ID from the map
-	Object::objectIDMap.erase(id);
+	objectIDMap.erase(id);
 	m_objects.pop_back();
 }
 

@@ -15,9 +15,8 @@
 int main()
 {
 	// im lazy
-	using Engine = EditorEngine;
+	EditorEngine* engine = &EditorEngine::Get();
 #pragma region ENGINE_SETUP
-	Engine* engine = new Engine();
 	engine->Start();
 #pragma endregion
 
@@ -49,9 +48,6 @@ int main()
 
 		engine->Update();
 	}
-
-	delete engine;
-
 	return 0;
 }
 

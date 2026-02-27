@@ -8,14 +8,12 @@
 
 class EditorEngine;
 
-class Object 
+class Object : public sf::Drawable
 {
 public:
 	Object();
 	void Update();
 	void Start();
-
-	static ObjectIDMap objectIDMap;
 
 	void SetTexture(const std::string& imgPath);
 	void SetPosition(Math::Vector2f newPos);
@@ -29,35 +27,34 @@ public:
 	void SetID(std::string newID);
 	std::string GetID();
 
+	void Destroy();
+
 
 	// public as i was going to add a Get and Set, with no extra validation
 	std::string name;
 	
-
-	
+	static ObjectIDMap IDMap;
 
 	~Object();
 
-	// lets you draw a sprite directly, it's lazy but works :D
-	operator sf::Sprite&() const
-	{
-		return *m_sprite;
-	}
-
-
 private:
+
 	/// <summary>
 	/// sf::sprite uses scale, m_rect uses pixel size. Calculate the "scale" from the pixel size and apply it.
 	/// </summary>
 	void ApplyRectToSprite();
 
-	sf::Sprite* m_sprite;
+	sf::Sprite m_sprite;
 	ScriptVec m_scripts;
 	std::string m_localImgPath;
 	Math::Rect m_rect;
 	std::string m_id;
+	EditorEngine* m_attachedEngine;
 	
-
+	inline void draw(sf::RenderTarget& target, sf::RenderStates states) const override
+	{
+		target.draw(m_sprite, states);
+	}
 
 	NLOHMANN_DEFINE_TYPE_INTRUSIVE(Object, name, m_id, m_rect, m_localImgPath);
 };
