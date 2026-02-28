@@ -12,6 +12,7 @@ class Object : public sf::Drawable
 public:
 	Object();
 	void Update();
+	void Init();
 	void Start();
 
 	void SetTexture(const std::string& imgPath);

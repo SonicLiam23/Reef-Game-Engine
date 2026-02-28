@@ -11,7 +11,7 @@ Object::Object() :  m_sprite(SpriteUtils::emptyTexture()), m_markedForDeletion(f
 {
 }
 
-void Object::Start()
+void Object::Init()
 {
 	m_sprite = SpriteUtils::CreateSprite(m_localImgPath);
 
@@ -25,10 +25,17 @@ void Object::Start()
 	}
 
 	ApplyRectToSprite();
-	// script starts will be ran on runtime
 
 	// if user edits save file so 2 objects have the same ID, ensure its overridden
 	SetID(m_id);
+}
+
+void Object::Start()
+{
+	for (Script* script : m_scripts)
+	{
+		script->Start();
+	}
 }
 
 void Object::SetTexture(const std::string& imgPath)

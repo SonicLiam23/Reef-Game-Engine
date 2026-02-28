@@ -19,11 +19,13 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Engine.cpp" />
     <ClCompile Include="Object.cpp" />
     <ClCompile Include="Script.cpp" />
     <ClCompile Include="Window.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\include\Engine.h" />
     <ClInclude Include="..\include\EngineTypes.h" />
     <ClInclude Include="..\include\FileUtils.h" />
     <ClInclude Include="..\include\Object.h" />
@@ -34,12 +36,16 @@
     <ClInclude Include="..\include\Vector2.h" />
     <ClInclude Include="..\include\Window.h" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="..\Reef Engine\SavedObjects.json" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
     <ProjectGuid>{d4752f9c-0b3b-46ed-8835-b44fd3bfbcf4}</ProjectGuid>
     <RootNamespace>common</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+    <ProjectName>EngineCore</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">

@@ -45,9 +45,6 @@
     <ClCompile Include="EditorEngine.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="RuntimeEngine.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="TEST.cpp">
       <Filter>SERIALIZE CODE DO NOT USE YET</Filter>
     </ClCompile>

@@ -7,7 +7,9 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Reef Hub", "Reef Hub\Reef_H
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Reef Editor", "Reef Engine\Reef Engine.vcxproj", "{35D14F32-BDF3-40B3-AB47-A67D8DB8A81D}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "common", "common\common.vcxproj", "{D4752F9C-0B3B-46ED-8835-B44FD3BFBCF4}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "EngineCore", "common\common.vcxproj", "{D4752F9C-0B3B-46ED-8835-B44FD3BFBCF4}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Reef Runtime", "Reef Runtime\Reef Runtime.vcxproj", "{E3EAA102-F8CB-4087-B571-134C804BF222}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -41,6 +43,14 @@ Global
 		{D4752F9C-0B3B-46ED-8835-B44FD3BFBCF4}.Release|x64.Build.0 = Release|x64
 		{D4752F9C-0B3B-46ED-8835-B44FD3BFBCF4}.Release|x86.ActiveCfg = Release|Win32
 		{D4752F9C-0B3B-46ED-8835-B44FD3BFBCF4}.Release|x86.Build.0 = Release|Win32
+		{E3EAA102-F8CB-4087-B571-134C804BF222}.Debug|x64.ActiveCfg = Debug|x64
+		{E3EAA102-F8CB-4087-B571-134C804BF222}.Debug|x64.Build.0 = Debug|x64
+		{E3EAA102-F8CB-4087-B571-134C804BF222}.Debug|x86.ActiveCfg = Debug|Win32
+		{E3EAA102-F8CB-4087-B571-134C804BF222}.Debug|x86.Build.0 = Debug|Win32
+		{E3EAA102-F8CB-4087-B571-134C804BF222}.Release|x64.ActiveCfg = Release|x64
+		{E3EAA102-F8CB-4087-B571-134C804BF222}.Release|x64.Build.0 = Release|x64
+		{E3EAA102-F8CB-4087-B571-134C804BF222}.Release|x86.ActiveCfg = Release|Win32
+		{E3EAA102-F8CB-4087-B571-134C804BF222}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
