@@ -20,6 +20,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Engine.cpp" />
+    <ClCompile Include="Input.cpp" />
+    <ClCompile Include="InputImpl.cpp" />
     <ClCompile Include="Object.cpp" />
     <ClCompile Include="Script.cpp" />
     <ClCompile Include="Window.cpp" />
@@ -28,6 +30,8 @@
     <ClInclude Include="..\include\Engine.h" />
     <ClInclude Include="..\include\EngineTypes.h" />
     <ClInclude Include="..\include\FileUtils.h" />
+    <ClInclude Include="..\include\Input.h" />
+    <ClInclude Include="..\include\InputImpl.h" />
     <ClInclude Include="..\include\Object.h" />
     <ClInclude Include="..\include\Rect.h" />
     <ClInclude Include="..\include\Reef-Common.h" />
