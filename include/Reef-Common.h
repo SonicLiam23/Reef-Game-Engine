@@ -1,4 +1,5 @@
 #pragma once
+#include "EngineAPI.h"
 #include "EngineTypes.h"
 #include "Script.h"
 #include "Object.h"
