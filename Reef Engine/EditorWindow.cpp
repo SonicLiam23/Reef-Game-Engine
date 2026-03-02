@@ -89,7 +89,7 @@ void EditorWindow::Update(ObjectVec& objectsToRender)
 			outline.setOutlineColor(sf::Color::Yellow);
 		}
 		
-		outline.setOutlineThickness(1.7);
+		outline.setOutlineThickness(1.7f);
 		outline.setSize(object->GetSize());
 		outline.setPosition(object->GetPosition());
 

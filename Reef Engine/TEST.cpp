@@ -54,6 +54,8 @@ inline static ClassName##_Registrator global_##ClassName##_registrator;
     void deserialize(const nlohmann::json& j) override { *this = j.get<ClassName>(); } \
     std::string type_name() const override { return #ClassName; }
 
+// EXAMPLE:
+
 class MyClass : public ISerializable {
 public:
     int num;

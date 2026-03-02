@@ -3,15 +3,15 @@
 
 bool Input::GetKeyDown(Input::Key key)
 {
-	return Input::GetKeyDown(key);
+	return InputImpl::Get().GetKeyDown(key);
 }
 
 bool Input::GetKeyUp(Input::Key key)
 {
-	return Input::GetKeyUp(key);
+	return InputImpl::Get().GetKeyUp(key);
 }
 
 bool Input::GetKeyHeld(Input::Key key)
 {
-	return Input::GetKeyHeld(key);
+	return InputImpl::Get().GetKeyHeld(key);
 }

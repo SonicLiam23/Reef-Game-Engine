@@ -3,8 +3,9 @@
 #include "Vector2.h"
 #include "EngineTypes.h"
 #include <string>
+#include "EngineAPI.h"
 
-class Window
+class ENGINE_API Window
 {
 public:
 	Window(unsigned int scale, std::string name);

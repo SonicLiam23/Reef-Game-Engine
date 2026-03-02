@@ -13,7 +13,7 @@ Object* Engine::AddObject(const std::string objName)
 
 	obj->name = objName;
 	obj->SetID(std::to_string(rand()));
-	Object::IDMap[obj->GetID()] = m_objects.size() - 1;
+	Object::GetIDMap()[obj->GetID()] = m_objects.size() - 1;
 
 	obj->Init();
 	return obj;
@@ -22,12 +22,12 @@ Object* Engine::AddObject(const std::string objName)
 void Engine::DestroyObject(const std::string& id)
 {
 	// O(1) deletion using IDs
-	if (Object::IDMap.count(id) == 0)
+	if (Object::GetIDMap().count(id) == 0)
 	{
 		assert(false);
 		return;
 	}
-	size_t ind = Object::IDMap[id];
+	size_t ind = Object::GetIDMap()[id];
 	if (ind != m_objects.size() - 1)
 	{
 		// swapping with the back, so update the map
@@ -35,11 +35,11 @@ void Engine::DestroyObject(const std::string& id)
 
 		// ind now holds the old back
 		Object* movedObj = m_objects[ind].get();
-		Object::IDMap[movedObj->GetID()] = ind;
+		Object::GetIDMap()[movedObj->GetID()] = ind;
 	}
 
 	// now remove the object to deletes ID from the map
-	Object::IDMap.erase(id);
+	Object::GetIDMap().erase(id);
 	m_objects.pop_back();
 }
 
@@ -79,12 +79,11 @@ void Engine::LoadObjects()
 	file >> j;
 	for (auto objJson : j)
 	{
-		auto objFromJson = objJson.get<Object>();
-		ObjectUPtr obj = std::make_unique<Object>(std::move(objFromJson));
+		auto obj = std::make_unique<Object>(objJson);
 		if (obj)
 		{
 			// do this before because when we std::move the ptr wont be in the same place, so I dont need to subtract one.
-			Object::IDMap[obj->GetID()] = m_objects.size();
+			Object::GetIDMap()[obj->GetID()] = m_objects.size();
 			m_objects.push_back(std::move(obj));
 		}
 	}

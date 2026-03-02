@@ -71,6 +71,9 @@
     <ClInclude Include="..\include\Input.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\include\EngineAPI.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\Reef Engine\SavedObjects.json">

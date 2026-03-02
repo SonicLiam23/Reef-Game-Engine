@@ -1,17 +1,17 @@
 [
     {
-        "m_id": "test111",
-        "m_localImgPath": "Images\\testimg.png",
+        "m_id": "Penis11",
+        "m_localImgPath": "Images\\FullLogo.jpg",
         "m_rect": {
             "position": {
-                "x": 1039.0,
-                "y": 235.0
+                "x": 563.0,
+                "y": 171.0
             },
             "size": {
-                "x": 199.0,
-                "y": 58.0
+                "x": 686.0,
+                "y": 574.0
             }
         },
-        "name": "test obj"
+        "name": "Hello :D"
     }
 ]

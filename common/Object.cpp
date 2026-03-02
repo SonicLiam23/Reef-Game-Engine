@@ -4,7 +4,6 @@
 #include "SFML/Graphics/Sprite.hpp"
 #include "SFML/Graphics/Texture.hpp"
 #include "SFML/Graphics/Rect.hpp"
-ObjectIDMap Object::IDMap;
 
 
 Object::Object() :  m_sprite(SpriteUtils::emptyTexture()), m_markedForDeletion(false)
@@ -90,7 +89,7 @@ void Object::SetID(std::string newID)
 	std::string temp = newID;
 	int count = 1;
 
-	while (IDMap.find(temp) != IDMap.end())
+	while (GetIDMap().find(temp) != GetIDMap().end())
 	{
 		temp = newID + std::to_string(count);
 		++count;
@@ -98,11 +97,11 @@ void Object::SetID(std::string newID)
 
 	newID = temp;
 
-	size_t ind = IDMap[m_id];
-	IDMap.erase(m_id);
+	size_t ind = GetIDMap()[m_id];
+	GetIDMap().erase(m_id);
 
 	m_id = newID;
-	IDMap[newID] = ind;
+	GetIDMap()[newID] = ind;
 }
 
 std::string Object::GetID()
@@ -131,6 +130,12 @@ void Object::Update()
 	{
 		script->Update();
 	}
+}
+
+ObjectIDMap& Object::GetIDMap()
+{
+	static ObjectIDMap IDMap;
+	return IDMap;
 }
 
 Object::~Object()

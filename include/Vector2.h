@@ -1,6 +1,7 @@
 #pragma once
 #include "SFML/System/Vector2.hpp"
 #include "json.hpp"
+#include "EngineAPI.h"
 // allows the user to automatically use a Math::Vector2x when needing a sf::Vector2, but not use a sf::Vector2 in place of Math::Vector2
 namespace Math
 {

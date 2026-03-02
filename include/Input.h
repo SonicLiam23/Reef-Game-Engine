@@ -1,7 +1,8 @@
 #pragma once
 #include "SFML/Window/Keyboard.hpp"
+#include "EngineAPI.h"
 
-struct Input
+struct ENGINE_API Input
 {
 	using Key = sf::Keyboard::Scancode;
 	enum KeyType

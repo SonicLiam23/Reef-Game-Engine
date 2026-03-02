@@ -2,8 +2,9 @@
 class Window;
 #include <string>
 #include "EngineTypes.h"
-class Object;
-class Engine
+#include "Object.h"
+#include "EngineAPI.h"
+class ENGINE_API Engine
 {
 public:
 	Engine();
@@ -21,6 +22,13 @@ public:
 
 	void SaveObjects();
 	void LoadObjects();
+
+	Engine(const Engine&) = delete;
+	Engine& operator=(const Engine&) = delete;
+
+	Engine(Engine&&) = default;
+	Engine& operator=(Engine&&) = default;
+
 protected:
 	ObjectVec m_objects;
 

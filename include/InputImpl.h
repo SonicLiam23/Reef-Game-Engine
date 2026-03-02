@@ -2,7 +2,8 @@
 #include "SFML/Window/Keyboard.hpp"
 #include "SFML/Window/Mouse.hpp"
 #include "SFML/Window/Event.hpp"
-class InputImpl
+#include "EngineAPI.h"
+class ENGINE_API InputImpl
 {
 public:
 

@@ -5,11 +5,13 @@
 #include "imgui-SFML.h"
 #include "SFML/Graphics.hpp"
 #include "json.hpp"
+#include "EngineAPI.h"
 
 
-class Object : public sf::Drawable
+class ENGINE_API Object : public sf::Drawable
 {
 public:
+
 	Object();
 	void Update();
 	void Init();
@@ -32,8 +34,14 @@ public:
 
 	// public as i was going to add a Get and Set, with no extra validation
 	std::string name;
+	static ObjectIDMap& GetIDMap();
+
+	Object(const Object&) = delete;
+	Object& operator=(const Object&) = delete;
+
+	Object(Object&&) = default;
+	Object& operator=(Object&&) = default;
 	
-	static ObjectIDMap IDMap;
 
 	~Object();
 

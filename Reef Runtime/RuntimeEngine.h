@@ -1,4 +1,5 @@
 #pragma once
+#include "EngineAPI.h"
 #include "Engine.h"
 class RuntimeWindow;
 class RuntimeEngine :

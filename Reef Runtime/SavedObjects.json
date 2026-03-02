@@ -1,1 +1,17 @@
-D:/LIAM STUFF/Reef-Game-Engine/Reef Engine/SavedObjects.json
+[
+    {
+        "m_id": "Penis",
+        "m_localImgPath": "Images\\FullLogo.jpg",
+        "m_rect": {
+            "position": {
+                "x": 435.0,
+                "y": 171.0
+            },
+            "size": {
+                "x": 686.0,
+                "y": 574.0
+            }
+        },
+        "name": "Hello :D"
+    }
+]
