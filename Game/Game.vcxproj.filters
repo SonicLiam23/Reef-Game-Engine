@@ -23,7 +23,7 @@
     <ClCompile Include="TestScript.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="GameExport.cpp">
+    <ClCompile Include="GameExport.h">
       <Filter>Header Files</Filter>
     </ClCompile>
   </ItemGroup>

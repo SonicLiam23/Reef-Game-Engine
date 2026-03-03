@@ -7,6 +7,7 @@
 #include "Rect.h"
 #include "FileUtils.h"
 #include <iostream>
+#include "SerializableFactory.h"
 
 void HelpMarker(const char* desc)
 {
@@ -179,6 +180,21 @@ void EditorWindow::SetImGuiElements()
 			m_selectedObject->SetTexture(FileUtils::GetImageAndCopyToProject());
 			m_selectedObject->SetSize(objRect.size);
 		}
+
+		if (ImGui::BeginCombo("Add Script", "Select Script"))
+		{
+			for (auto& [name, _] : SerializableFactory::Get().GetRegistry())
+			{
+				if (ImGui::Selectable(name.c_str()))
+				{
+					auto script = SerializableFactory::Get().Create(name);
+					m_selectedObject->AddScript(std::move(script));
+				}
+			}
+
+			ImGui::EndCombo();
+		}
+
 
 		if (ImGui::Button("Delete Object", m_buttonSize))
 		{

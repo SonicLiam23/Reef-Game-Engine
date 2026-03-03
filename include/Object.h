@@ -6,6 +6,8 @@
 #include "SFML/Graphics.hpp"
 #include "json.hpp"
 #include "EngineAPI.h"
+#include "Script.h"
+#include "SerializableFactory.h"
 
 
 class ENGINE_API Object : public sf::Drawable
@@ -30,6 +32,7 @@ public:
 	std::string GetID();
 	void Destroy();
 	bool MarkedForDeletion();
+	void AddScript(ScriptUPtr script);
 
 
 	// public as i was going to add a Get and Set, with no extra validation
@@ -64,6 +67,11 @@ private:
 		target.draw(m_sprite, states);
 	}
 
-	NLOHMANN_DEFINE_TYPE_INTRUSIVE(Object, name, m_id, m_rect, m_localImgPath);
+	friend void to_json(nlohmann::json& j, const Object& obj);
+	friend void from_json(const nlohmann::json& j, Object& obj);
+
 };
+
+void to_json(nlohmann::json& j, const Object& obj);
+void from_json(const nlohmann::json& j, Object& obj);
 

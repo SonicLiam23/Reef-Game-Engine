@@ -141,7 +141,6 @@
     <ClCompile Include="imgui_tables.cpp" />
     <ClCompile Include="imgui_widgets.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="TEST.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="EditorEngine.h" />

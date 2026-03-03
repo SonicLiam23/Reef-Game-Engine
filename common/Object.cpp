@@ -1,9 +1,9 @@
 #include "Object.h"
-#include "Script.h"
 #include "SpriteUtils.h"
 #include "SFML/Graphics/Sprite.hpp"
 #include "SFML/Graphics/Texture.hpp"
 #include "SFML/Graphics/Rect.hpp"
+#include "SerializableFactory.h"
 
 
 Object::Object() :  m_sprite(SpriteUtils::emptyTexture()), m_markedForDeletion(false)
@@ -31,7 +31,7 @@ void Object::Init()
 
 void Object::Start()
 {
-	for (Script* script : m_scripts)
+	for (ScriptUPtr& script : m_scripts)
 	{
 		script->Start();
 	}
@@ -119,6 +119,11 @@ bool Object::MarkedForDeletion()
 	return m_markedForDeletion;
 }
 
+void Object::AddScript(ScriptUPtr script)
+{
+	m_scripts.push_back(std::move(script));
+}
+
 bool Object::IsColliding(Math::Vector2f point)
 {
 	return m_sprite.getGlobalBounds().contains(point);
@@ -126,7 +131,7 @@ bool Object::IsColliding(Math::Vector2f point)
 
 void Object::Update()
 {
-	for (Script* script : m_scripts)
+	for (ScriptUPtr& script : m_scripts)
 	{
 		script->Update();
 	}
@@ -154,3 +159,49 @@ void Object::ApplyRectToSprite()
 
 	m_sprite.setPosition(m_rect.position);
 }
+
+void to_json(nlohmann::json& j, const Object& obj)
+{
+	j["m_id"] = obj.m_id;
+	j["m_localImgPath"] = obj.m_localImgPath;
+	j["m_rect"] = obj.m_rect;
+	j["name"] = obj.name;
+
+	j["m_scripts"] = nlohmann::json::array();
+
+	for (const ScriptUPtr& scriptPtr : obj.m_scripts)
+	{
+		nlohmann::json entry;
+		entry["type"] = scriptPtr->GetTypeName();
+		entry["data"] = scriptPtr->Serialize();
+
+		j["m_scripts"].push_back(entry);
+	}
+}
+
+void from_json(const nlohmann::json& j, Object& obj)
+{
+	obj.m_id = j["m_id"];
+	obj.m_localImgPath = j["m_localImgPath"];
+	obj.m_rect = j["m_rect"];
+	obj.name = j["name"];
+
+	obj.m_scripts.clear();
+
+	if (j.contains("m_scripts"))
+	{
+		for (const auto& entry : j["m_scripts"])
+		{
+			std::string type = entry.at("type").get<std::string>();
+
+			auto script = SerializableFactory::Get().Create(type);
+			if (!script)
+				continue; // or throw
+
+			script->Deserialize(entry.at("data"));
+
+			obj.m_scripts.push_back(std::move(script));
+		}
+	}
+}
+

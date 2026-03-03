@@ -1,6 +1,7 @@
 #include "RuntimeEngine.h"
 #include "RuntimeWindow.h"
 #include "Object.h"
+#include <windows.h>
 
 RuntimeEngine& RuntimeEngine::Get()
 {
@@ -10,6 +11,8 @@ RuntimeEngine& RuntimeEngine::Get()
 
 void RuntimeEngine::Start()
 {
+	LoadLibraryA("Game.dll");
+
 	m_isRunning = true;
 
 	m_window = new RuntimeWindow(100, "Reef Engine");

@@ -1,6 +1,7 @@
 #pragma once
+#include "ISerializable.h"
 // user created scripts to be attached to objects will be inherited from this.
-class Script
+class Script : public ISerializable
 {
 public:
 	virtual void Update() = 0;

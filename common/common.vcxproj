@@ -23,7 +23,7 @@
     <ClCompile Include="Input.cpp" />
     <ClCompile Include="InputImpl.cpp" />
     <ClCompile Include="Object.cpp" />
-    <ClCompile Include="Script.cpp" />
+    <ClCompile Include="SerializableFactory.cpp" />
     <ClCompile Include="Window.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -33,10 +33,12 @@
     <ClInclude Include="..\include\FileUtils.h" />
     <ClInclude Include="..\include\Input.h" />
     <ClInclude Include="..\include\InputImpl.h" />
+    <ClInclude Include="..\include\ISerializable.h" />
     <ClInclude Include="..\include\Object.h" />
     <ClInclude Include="..\include\Rect.h" />
     <ClInclude Include="..\include\Reef-Common.h" />
     <ClInclude Include="..\include\Script.h" />
+    <ClInclude Include="..\include\SerializableFactory.h" />
     <ClInclude Include="..\include\SpriteUtils.h" />
     <ClInclude Include="..\include\Vector2.h" />
     <ClInclude Include="..\include\Window.h" />
@@ -98,10 +100,10 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <OutDir>$(SolutionDir)lib</OutDir>
+    <OutDir>$(SolutionDir)$(Platform)\$(Configuration)\</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <OutDir>$(SolutionDir)lib</OutDir>
+    <OutDir>$(SolutionDir)$(Platform)\$(Configuration)\</OutDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -138,7 +140,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
-      <SDLCheck>true</SDLCheck>
+      <SDLCheck>false</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_LIB;IMAGES_PATH_PROJECT=R"($(ProjectDir)Images)";ENGINECORE_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>

@@ -3,11 +3,14 @@
 #include <memory>
 #include <unordered_map>
 #include <string>
-class Object;
-class Script;
 
+
+class Object;
 using ObjectUPtr = std::unique_ptr<Object>;
 using ObjectVec = std::vector<ObjectUPtr>;
 
-using ScriptVec = std::vector<Script*>;
+class Script;
+using ScriptUPtr = std::unique_ptr<Script>;
+using ScriptVec = std::vector<ScriptUPtr>;
+
 using ObjectIDMap = std::unordered_map<std::string, size_t>;

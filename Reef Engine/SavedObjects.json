@@ -1,17 +1,25 @@
 [
     {
-        "m_id": "Penis11",
-        "m_localImgPath": "Images\\FullLogo.jpg",
+        "m_id": "111111",
+        "m_localImgPath": "",
         "m_rect": {
             "position": {
-                "x": 563.0,
-                "y": 171.0
+                "x": 510.0,
+                "y": 390.0
             },
             "size": {
-                "x": 686.0,
-                "y": 574.0
+                "x": 64.0,
+                "y": 64.0
             }
         },
-        "name": "Hello :D"
+        "m_scripts": [
+            {
+                "data": {
+                    "num": 0
+                },
+                "type": "TestScript"
+            }
+        ],
+        "name": "test"
     }
 ]

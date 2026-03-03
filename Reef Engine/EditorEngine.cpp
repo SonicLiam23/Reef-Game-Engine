@@ -4,6 +4,7 @@
 #include <iostream>
 #include <fstream>
 #include <random>
+#include <windows.h>
 
 EditorEngine::EditorEngine() : Engine()
 {
@@ -23,6 +24,8 @@ EditorEngine& EditorEngine::Get()
 
 void EditorEngine::Start()
 {
+	LoadLibraryA("Game.dll");
+
 	m_window = new EditorWindow(100, "Reef Engine");
 	m_window->Start(this);
 

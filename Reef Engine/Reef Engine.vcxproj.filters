@@ -16,9 +16,6 @@
     <Filter Include="Source Files\ImGui">
       <UniqueIdentifier>{d62ed636-051f-443b-9b8c-a8366fcc12c2}</UniqueIdentifier>
     </Filter>
-    <Filter Include="SERIALIZE CODE DO NOT USE YET">
-      <UniqueIdentifier>{48d6beb7-64f0-47e3-8478-a3e87f463109}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -44,9 +41,6 @@
     </ClCompile>
     <ClCompile Include="EditorEngine.cpp">
       <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="TEST.cpp">
-      <Filter>SERIALIZE CODE DO NOT USE YET</Filter>
     </ClCompile>
     <ClCompile Include="imgui_stdlib.cpp">
       <Filter>Source Files\ImGui</Filter>
