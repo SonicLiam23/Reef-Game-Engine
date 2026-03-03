@@ -86,9 +86,6 @@ void Engine::LoadObjects()
 			// do this before because when we std::move the ptr wont be in the same place, so I dont need to subtract one.
 			Object::GetIDMap()[obj->GetID()] = m_objects.size();
 			m_objects.push_back(std::move(obj));
-
-
-
 		}
 	}
 	file.close();

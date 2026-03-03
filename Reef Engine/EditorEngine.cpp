@@ -1,10 +1,13 @@
 #include "EditorEngine.h"
+#include "EngineTypes.h"
 #include "EditorWindow.h"
+#include "SpriteUtils.h"
 #include "Object.h"
 #include <iostream>
 #include <fstream>
 #include <random>
 #include <windows.h>
+#include <string>
 
 EditorEngine::EditorEngine() : Engine()
 {
@@ -25,6 +28,8 @@ EditorEngine& EditorEngine::Get()
 void EditorEngine::Start()
 {
 	LoadLibraryA("Game.dll");
+
+	SpriteUtils::Init();
 
 	m_window = new EditorWindow(100, "Reef Engine");
 	m_window->Start(this);
@@ -78,13 +83,13 @@ void EditorEngine::Update()
 
 void EditorEngine::End()
 {
-	m_isRunning = false;
 	SaveObjects();
+	for (ObjectUPtr& obj : m_objects)
+	{
+		DestroyObject(obj->GetID());
+	}
+	m_isRunning = false;
+	
+	SpriteUtils::End();
+
 }
-
-
-///////////////////API///////////////////////
-
-
-
-

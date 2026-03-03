@@ -3,10 +3,10 @@
 
 void TestScript::Update()
 {
-	std::cout << "I am a script updating!\n";
+	std::cout << name << "\n";
 }
 
 void TestScript::Start()
 {
-
+	name = "Bum man";
 }

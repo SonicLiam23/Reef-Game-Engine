@@ -7,7 +7,6 @@ int main()
 	{
 		engine->Update();
 	}
-	engine->End();
 
 	return 0;
 }

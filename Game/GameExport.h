@@ -3,6 +3,7 @@
 #include "ISerializable.h"
 #include "SerializableFactory.h"
 #include "Script.h"
+#include <iostream>
 
 #ifdef GAME_EXPORTS
 #define ENGINE_API __declspec(dllexport)
@@ -24,7 +25,9 @@ inline static ClassName##_Registrator global_##ClassName##_registrator;
 
 // REQUIRES AT LEAST 1 FIELD TO SERIALIZE
 #define SERIALIZE(ClassName, ...) \
+    public: \
+    ~ClassName() = default; \
     NLOHMANN_DEFINE_TYPE_INTRUSIVE(ClassName, __VA_ARGS__) \
     nlohmann::json Serialize() const override { return nlohmann::json(*this); } \
-    void Deserialize(const nlohmann::json& j) override { from_json(j, *this); } \
+    void Deserialize(const nlohmann::json& j) override { try { from_json(j, *this); } catch (const std::exception& e) { std::cout << e.what() << std::endl; } } \
     std::string GetTypeName() const override { return #ClassName; }

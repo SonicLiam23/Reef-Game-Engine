@@ -2,6 +2,7 @@
 #include "RuntimeWindow.h"
 #include "Object.h"
 #include <windows.h>
+#include "SpriteUtils.h"
 
 RuntimeEngine& RuntimeEngine::Get()
 {
@@ -12,6 +13,8 @@ RuntimeEngine& RuntimeEngine::Get()
 void RuntimeEngine::Start()
 {
 	LoadLibraryA("Game.dll");
+
+	SpriteUtils::Init();
 
 	m_isRunning = true;
 
@@ -49,7 +52,14 @@ void RuntimeEngine::End()
 {
 	for (ObjectUPtr& obj : m_objects)
 	{
-		obj->Destroy();
+		DestroyObject(obj->GetID());
 	}
 	m_isRunning = false;
+
+	SpriteUtils::End();
+}
+
+RuntimeEngine::~RuntimeEngine()
+{
+	delete m_window;
 }

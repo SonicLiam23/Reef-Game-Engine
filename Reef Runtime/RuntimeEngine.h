@@ -1,6 +1,7 @@
 #pragma once
 #include "EngineAPI.h"
 #include "Engine.h"
+#include <Windows.h>
 class RuntimeWindow;
 class RuntimeEngine :
     public Engine
@@ -14,7 +15,7 @@ public:
 
 private:
     RuntimeEngine() = default;
-    ~RuntimeEngine() = default;
+    ~RuntimeEngine();
 
     RuntimeWindow* m_window;
 };

@@ -72,6 +72,7 @@ void EditorWindow::Update(ObjectVec& objectsToRender)
 		{
 			m_attachedEngine->End();
 			m_window->close();
+			return;
 		}
 	}
 

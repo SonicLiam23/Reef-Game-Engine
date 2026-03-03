@@ -6,7 +6,7 @@
 #include "SerializableFactory.h"
 
 
-Object::Object() :  m_sprite(SpriteUtils::emptyTexture()), m_markedForDeletion(false)
+Object::Object() :  m_sprite(SpriteUtils::EmptyTexture()), m_markedForDeletion(false)
 {
 }
 
@@ -143,10 +143,7 @@ ObjectIDMap& Object::GetIDMap()
 	return IDMap;
 }
 
-Object::~Object()
-{
-
-}
+Object::~Object() = default;
 
 void Object::ApplyRectToSprite()
 {
@@ -181,10 +178,11 @@ void to_json(nlohmann::json& j, const Object& obj)
 
 void from_json(const nlohmann::json& j, Object& obj)
 {
-	obj.m_id = j["m_id"];
-	obj.m_localImgPath = j["m_localImgPath"];
-	obj.m_rect = j["m_rect"];
-	obj.name = j["name"];
+	obj.m_id = j.value("m_id", obj.m_id);
+	obj.m_localImgPath = j.value("m_localImgPath", obj.m_localImgPath);
+	if (j.contains("m_rect"))
+		j.at("m_rect").get_to(obj.m_rect);
+	obj.name = j.value("name", obj.name);
 
 	obj.m_scripts.clear();
 
@@ -192,6 +190,9 @@ void from_json(const nlohmann::json& j, Object& obj)
 	{
 		for (const auto& entry : j["m_scripts"])
 		{
+			if (!entry.contains("type") || !entry.contains("data"))
+				continue;
+
 			std::string type = entry.at("type").get<std::string>();
 
 			auto script = SerializableFactory::Get().Create(type);

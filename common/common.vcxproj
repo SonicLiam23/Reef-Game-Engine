@@ -24,6 +24,7 @@
     <ClCompile Include="InputImpl.cpp" />
     <ClCompile Include="Object.cpp" />
     <ClCompile Include="SerializableFactory.cpp" />
+    <ClCompile Include="SpriteUtils.cpp" />
     <ClCompile Include="Window.cpp" />
   </ItemGroup>
   <ItemGroup>

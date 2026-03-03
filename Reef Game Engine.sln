@@ -4,9 +4,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 17.14.36717.8
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Reef Hub", "Reef Hub\Reef_Hub.vcxproj", "{90B32C52-AE63-4349-B1A7-95D4A886244D}"
-	ProjectSection(ProjectDependencies) = postProject
-		{D4752F9C-0B3B-46ED-8835-B44FD3BFBCF4} = {D4752F9C-0B3B-46ED-8835-B44FD3BFBCF4}
-	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Reef Editor", "Reef Engine\Reef Engine.vcxproj", "{35D14F32-BDF3-40B3-AB47-A67D8DB8A81D}"
 EndProject
