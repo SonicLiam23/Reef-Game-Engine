@@ -6,13 +6,13 @@
 #include <iostream>
 
 #ifdef GAME_EXPORTS
-#define ENGINE_API __declspec(dllexport)
-#define SCRIPT(ClassName) class __declspec(dllexport) ClassName : public Script
+#define SCRIPT __declspec(dllexport)
 #else
 #define SCRIPT __declspec(dllimport)
 #endif
 
 // in game.dll, included in all scripts.
+
 #define REGISTER_SERIALIZABLE(ClassName) \
 struct ClassName##_Registrator { \
     ClassName##_Registrator() { \

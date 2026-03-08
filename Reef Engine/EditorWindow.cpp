@@ -8,6 +8,8 @@
 #include "FileUtils.h"
 #include <iostream>
 #include "SerializableFactory.h"
+#include "Script.h"
+#include "Iserializable.h"
 
 void HelpMarker(const char* desc)
 {
@@ -58,6 +60,8 @@ void EditorWindow::Start(EditorEngine* engine)
 	m_viewport.parent = this;
 	
 	m_selectedObjectThisFrame = false;
+
+	m_selectedScriptIdx = 0;
 }
 
 void EditorWindow::Update(ObjectVec& objectsToRender)
@@ -196,13 +200,34 @@ void EditorWindow::SetImGuiElements()
 			ImGui::EndCombo();
 		}
 
+		if (ImGui::BeginListBox("##listbox 2", ImVec2(-FLT_MIN, 5 * ImGui::GetTextLineHeightWithSpacing())))
+		{
+			for (int n = 0; n < m_selectedObject->GetScripts().size(); n++)
+			{
+				bool is_selected = m_selectedScriptIdx == n;
+				ImGuiSelectableFlags flags = (m_selectedScriptIdx == n) ? ImGuiSelectableFlags_Highlight : 0;
+				if (ImGui::Selectable(m_selectedObject->GetScripts().at(n)->GetTypeName().c_str(), is_selected, flags))
+					m_selectedScriptIdx = n;
+
+				// Set the initial focus when opening the combo (scrolling + keyboard navigation focus)
+				if (is_selected)
+					ImGui::SetItemDefaultFocus();
+			}
+			ImGui::EndListBox();
+
+			if (ImGui::Button("Remove Script", m_buttonSize))
+			{
+				m_selectedObject->RemoveScript(m_selectedScriptIdx);
+				m_selectedScriptIdx = 0;
+			}
+		}
 
 		if (ImGui::Button("Delete Object", m_buttonSize))
 		{
 			m_selectedObject->Destroy();
 		}
 	}
-#pragma endregion
+#pragma endregion SELECTING_OBJECT
 
 
 

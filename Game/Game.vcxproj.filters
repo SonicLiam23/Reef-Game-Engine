@@ -18,6 +18,9 @@
     <ClInclude Include="TestScript.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="MoveRight.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="TestScript.cpp">
@@ -25,6 +28,9 @@
     </ClCompile>
     <ClCompile Include="GameExport.h">
       <Filter>Header Files</Filter>
+    </ClCompile>
+    <ClCompile Include="MoveRight.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

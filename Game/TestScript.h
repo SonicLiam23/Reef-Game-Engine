@@ -1,7 +1,7 @@
 #pragma once
 #include "GameExport.h"
 #include <string>
-class ENGINE_API TestScript : public Script
+class SCRIPT TestScript : public Script
 {
 	std::string name;
 	void Update() override;

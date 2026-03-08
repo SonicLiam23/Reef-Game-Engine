@@ -33,6 +33,8 @@ public:
 	void Destroy();
 	bool MarkedForDeletion();
 	void AddScript(ScriptUPtr script);
+	void RemoveScript(int ind);
+	ScriptVec& GetScripts();
 
 
 	// public as i was going to add a Get and Set, with no extra validation

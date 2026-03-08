@@ -31,6 +31,7 @@ private:
     Viewport m_viewport;
     bool m_selectedObjectThisFrame;
     Object* m_selectedObject;
+    int m_selectedScriptIdx;
 
     std::unordered_map<Object*, sf::RectangleShape> m_outlines;
 

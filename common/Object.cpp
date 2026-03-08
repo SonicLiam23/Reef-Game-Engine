@@ -124,6 +124,21 @@ void Object::AddScript(ScriptUPtr script)
 	m_scripts.push_back(std::move(script));
 }
 
+void Object::RemoveScript(int ind)
+{
+	if (ind != m_scripts.size())
+	{
+		// swapping with the back
+		std::swap(m_scripts[ind], m_scripts.back());
+		m_scripts.pop_back();
+	}
+}
+
+ScriptVec& Object::GetScripts()
+{
+	return m_scripts;
+}
+
 bool Object::IsColliding(Math::Vector2f point)
 {
 	return m_sprite.getGlobalBounds().contains(point);
@@ -202,6 +217,7 @@ void from_json(const nlohmann::json& j, Object& obj)
 			script->Deserialize(entry.at("data"));
 
 			obj.m_scripts.push_back(std::move(script));
+			obj.m_scripts.back()->AttachedObject = &obj;
 		}
 	}
 }

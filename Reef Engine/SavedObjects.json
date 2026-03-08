@@ -1,6 +1,6 @@
 [
     {
-        "m_id": "159621",
+        "m_id": "15962111111111",
         "m_localImgPath": "Images\\Screenshot 2024-02-01 210252.jpg",
         "m_rect": {
             "position": {
@@ -12,7 +12,20 @@
                 "y": 285.0
             }
         },
-        "m_scripts": [],
+        "m_scripts": [
+            {
+                "data": {
+                    "moveAmt": 0
+                },
+                "type": "MoveRight"
+            },
+            {
+                "data": {
+                    "name": ""
+                },
+                "type": "TestScript"
+            }
+        ],
         "name": "NO_NAME"
     }
 ]

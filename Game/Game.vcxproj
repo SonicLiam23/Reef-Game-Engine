@@ -138,10 +138,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="MoveRight.h" />
     <ClInclude Include="TestScript.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameExport.h" />
+    <ClCompile Include="MoveRight.cpp" />
     <ClCompile Include="TestScript.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
