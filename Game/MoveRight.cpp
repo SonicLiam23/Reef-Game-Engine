@@ -1,6 +1,7 @@
 #include "MoveRight.h"
 #include "Script.h"
 #include "Vector2.h"
+#include "Input.h"
 
 void MoveRight::Update()
 {
@@ -11,5 +12,7 @@ void MoveRight::Update()
 
 void MoveRight::Start()
 {
-	moveAmt = 1;
+	moveAmt = 0;
 }
+
+

@@ -10,6 +10,7 @@
 #include "SerializableFactory.h"
 #include "Script.h"
 #include "Iserializable.h"
+#include "InputImpl.h"
 
 void HelpMarker(const char* desc)
 {
@@ -30,6 +31,8 @@ void EditorWindow::Start(EditorEngine* engine)
 	ImGui::SFML::Init(*m_window);
 
 	m_viewPortTex = new sf::RenderTexture(m_window->getSize());
+
+	InputImpl::Get().init(m_viewPortTex);
 
 	m_window->setFramerateLimit(60);
 
@@ -270,6 +273,22 @@ void EditorWindow::SetSelectedObject(Object* newSelected)
 	m_selectedObjectThisFrame = true;
 }
 
+Math::Vector2i EditorWindow::ConvertScreenPointToWorldCoords(Math::Vector2i& point)
+{
+	// convert screen point to viewport local point
+	float localX = point.x - m_viewport.position.x;
+	float localY = point.y - m_viewport.position.y;
+	// convert viewport local point to render texture pixel coordinates
+	float renderWidth = (float)(m_viewPortTex->getSize().x);
+	float renderHeight = (float)(m_viewPortTex->getSize().y);
+	float scaleX = renderWidth / m_viewport.size.x;
+	float scaleY = renderHeight / m_viewport.size.y;
+	localX *= scaleX;
+	localY *= scaleY;
+	// convert pixel coordinates to world coordinates using SFML view
+	sf::Vector2f world = m_window->mapPixelToCoords(sf::Vector2i(static_cast<int>(localX), static_cast<int>(localY)));
+	return Math::Vector2i(static_cast<int>(world.x), static_cast<int>(world.y));
+}
 
 //////////////////VIEWPORT////////////////
 
@@ -282,24 +301,5 @@ std::optional<Math::Vector2f> EditorWindow::Viewport::GetMousePos()
 
 	ImVec2 mousePos = ImGui::GetMousePos();
 
-	float localX = mousePos.x - position.x;
-	float localY = mousePos.y - position.y;
-
-	if (localX < 0.f || localY < 0.f ||
-		localX > size.x || localY > size.y)
-		return std::nullopt;
-
-	float renderWidth = (float)(parent->m_viewPortTex->getSize().x);
-	float renderHeight = (float)(parent->m_viewPortTex->getSize().y);
-
-	float scaleX = renderWidth / size.x;
-	float scaleY = renderHeight / size.y;
-
-	localX *= scaleX;
-	localY *= scaleY;
-
-	// Convert pixel space -> world space using SFML view
-	sf::Vector2f world = parent->m_window->mapPixelToCoords(sf::Vector2i(static_cast<int>(localX), static_cast<int>(localY)));
-
-	return Math::Vector2f(world.x, world.y);
+	return parent->ConvertScreenPointToWorldCoords(Math::Vector2i(static_cast<int>(mousePos.x), static_cast<int>(mousePos.y)));
 }

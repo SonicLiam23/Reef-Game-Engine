@@ -49,6 +49,7 @@ public:
     void Update(ObjectVec& objectsToRender) override;
 
     void SetSelectedObject(Object* newSelected);
+	Math::Vector2i ConvertScreenPointToWorldCoords(Math::Vector2i& point) override;
     
     Viewport* GetViewport();
 

@@ -12,24 +12,28 @@ namespace Math
 
 		constexpr Vector2() = default;
 		constexpr Vector2(T _x, T _y) : x(_x), y(_y) {}
-		inline constexpr bool IsZero()
+		inline constexpr bool IsZero() const
 		{
 			return x == 0 && y == 0;
 		}
 
-		operator sf::Vector2<T>() const
+		inline operator sf::Vector2<T>() const
 		{
 			return sf::Vector2<T>(x, y);
 		}
-		explicit Vector2(const sf::Vector2<T>& v)
-			: x(v.x), y(v.y) {
-		}
 
+		inline explicit Vector2<T>(const sf::Vector2<T>& v)
+			: x(v.x), y(v.y) {}
+
+		template <typename U>
+		constexpr Vector2(const Vector2<U>& other)
+			: x(static_cast<T>(other.x)), y(static_cast<T>(other.y)) {
+		};
 
 		NLOHMANN_DEFINE_TYPE_INTRUSIVE(Vector2, x, y);
 	};
 
-
+	
 	using Vector2f = Vector2<float>;
 	using Vector2u = Vector2<unsigned int>;
 	using Vector2i = Vector2<int>;

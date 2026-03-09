@@ -52,7 +52,10 @@ enum class Button
     Right,  //!< The right mouse button
     Middle, //!< The middle (wheel) mouse button
     Extra1, //!< The first extra mouse button
-    Extra2  //!< The second extra mouse button
+    Extra2,  //!< The second extra mouse button
+
+
+	Count   //!< Keep last -- the total number of mouse buttons
 };
 
 // NOLINTNEXTLINE(readability-identifier-naming)

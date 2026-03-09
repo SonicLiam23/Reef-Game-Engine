@@ -12,4 +12,3 @@ class SCRIPT TestScript : public Script
 };
 
 REGISTER_SERIALIZABLE(TestScript);
-

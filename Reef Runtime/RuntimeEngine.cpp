@@ -3,6 +3,7 @@
 #include "Object.h"
 #include <windows.h>
 #include "SpriteUtils.h"
+#include "InputImpl.h"
 
 RuntimeEngine& RuntimeEngine::Get()
 {
@@ -14,12 +15,16 @@ void RuntimeEngine::Start()
 {
 	LoadLibraryA("Game.dll");
 
+	
+
 	SpriteUtils::Init();
 
 	m_isRunning = true;
 
 	m_window = new RuntimeWindow(100, "Reef Engine");
 	m_window->Start(this);
+
+	InputImpl::Get().init(m_window->Get());
 
 	LoadObjects();
 

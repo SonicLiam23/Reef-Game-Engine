@@ -1,5 +1,16 @@
 #include "InputImpl.h"
+// this is used so the user cannot interact with certain things as part of the input system, such as "update key states" and "HandleKeyEvent"
+// the Input.h is what the user will interact with
 
+void InputImpl::init(sf::RenderTarget* target)
+{
+	m_currentRenderTarget = target;
+}
+
+sf::RenderTarget* InputImpl::GetRenderTarget()
+{
+	return m_currentRenderTarget;
+}
 
 void InputImpl::UpdateKeyStates()
 {

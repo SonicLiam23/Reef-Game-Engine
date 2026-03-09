@@ -8,6 +8,7 @@
 #include <random>
 #include <windows.h>
 #include <string>
+#include "Input.h"
 
 EditorEngine::EditorEngine() : Engine()
 {
@@ -50,8 +51,9 @@ void EditorEngine::Update()
 	// do not run update on the objects themselves, this is the editor
 	// detect which object to select
 
-	if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Left))
+	if (Input::GetMouseButton(Input::MouseButton::Left).clicked == Input::SingleClick)
 	{
+		// get mouse position relative to the viewport
 		std::optional<Math::Vector2f> mousePosOnViewport = m_window->GetViewport()->GetMousePos();
 		
 		if (mousePosOnViewport)
