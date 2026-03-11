@@ -26,9 +26,43 @@ namespace Math
 			: x(v.x), y(v.y) {}
 
 		template <typename U>
-		constexpr Vector2(const Vector2<U>& other)
+		constexpr Vector2(const Vector2<U>& other) 
 			: x(static_cast<T>(other.x)), y(static_cast<T>(other.y)) {
 		};
+
+		// addition
+		inline Vector2<T> operator+(const Vector2<T>& rhs)
+		{
+			
+			return Vector2<T>(x + rhs.x, y + rhs.y);
+		}
+		inline Vector2<T> operator+(const T& rhs)
+		{
+			return Vector2<T>(x + rhs, y + rhs);
+		}
+
+		// subtract
+		inline Vector2<T> operator-(const Vector2<T>& rhs)
+		{
+			return Vector2<T>(x - rhs.x, y - rhs.y);
+		}
+		inline Vector2<T> operator-(const T& rhs)
+		{
+			return Vector2<T>(x - rhs, y - rhs);
+		}
+
+		// multiplication by scalar
+		inline Vector2<T> operator*(const T& rhs)
+		{
+			return Vector2<T>(x * rhs, y * rhs);
+		}
+		
+		// division by scalar
+		inline Vector2<T> operator/(const T& rhs)
+		{
+			return Vector2<T>(x / rhs, y / rhs);
+		}
+
 
 		NLOHMANN_DEFINE_TYPE_INTRUSIVE(Vector2, x, y);
 	};

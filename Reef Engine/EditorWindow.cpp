@@ -49,7 +49,7 @@ void EditorWindow::Start(EditorEngine* engine)
 
 	m_viewPortTex = new sf::RenderTexture(m_window->getSize());
 
-	InputImpl::Get().init(m_viewPortTex);
+	InputImpl::Get().init(this);
 
 	m_window->setFramerateLimit(60);
 
@@ -86,17 +86,46 @@ void EditorWindow::Start(EditorEngine* engine)
 
 void EditorWindow::Update(ObjectVec& objectsToRender)
 {
+	InputImpl::Get().UpdateKeyStates();
 	while (std::optional<sf::Event> eventOpt = m_window->pollEvent())
 	{
 		const sf::Event& event = *eventOpt;
 
 		ImGui::SFML::ProcessEvent(*m_window, event);
+		InputImpl::Get().HandleKeyEvent(event);
 
 		if (event.is<sf::Event::Closed>())
 		{
 			m_attachedEngine->End();
 			m_window->close();
 			return;
+		}
+	}
+
+	if (Input::GetMouseButtonInfo().clickType == Input::ClickType::DoubleClick)
+	{
+		m_moveMode = true;
+		m_movingObject = m_selectedObject;
+		if (m_selectedObject)
+			m_mouseOffsetFromObject = m_viewport.GetMousePos().value_or(Math::Vector2f{0 , 0}) - m_movingObject->GetPosition();
+	}
+	else if (Input::GetMouseButtonInfo().clickType == Input::ClickType::Up)
+	{
+		m_moveMode = false;
+	}
+
+	if (m_moveMode)
+	{
+		if (m_movingObject)
+		{
+			// ensure the current object isnt "lost" when hovering over another object, as the hovered object will become selected
+			m_selectedObject = m_movingObject;
+			Math::Vector2f mousePos = m_viewport.GetMousePos().value_or(m_movingObject->GetPosition());
+			m_movingObject->SetPosition(mousePos - m_mouseOffsetFromObject);
+		}
+		else
+		{
+			// move camera
 		}
 	}
 

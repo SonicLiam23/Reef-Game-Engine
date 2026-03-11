@@ -5,9 +5,9 @@
 void TestScript::Update()
 {
 	
-	Input::ClickEvent clickEvent = Input::GetMouseButton(Input::MouseButton::Left);
+	Input::ClickEvent clickEvent = Input::GetMouseButtonInfo(Input::MouseButton::Left);
 
-	if (clickEvent.clicked == Input::SingleClick)
+	if (clickEvent.clickType == Input::SingleClick)
 	{
 		std::cout << "Mouse clicked at position: " << clickEvent.position.x << ", " << clickEvent.position.y << "\n";
 
@@ -16,8 +16,6 @@ void TestScript::Update()
 			std::cout << "Object was clicked!\n";
 		}
 	}
-
-
 }
 
 void TestScript::Start()

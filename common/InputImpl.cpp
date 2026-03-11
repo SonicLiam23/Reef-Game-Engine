@@ -2,14 +2,14 @@
 // this is used so the user cannot interact with certain things as part of the input system, such as "update key states" and "HandleKeyEvent"
 // the Input.h is what the user will interact with
 
-void InputImpl::init(sf::RenderTarget* target)
+void InputImpl::init(Window* target)
 {
-	m_currentRenderTarget = target;
+	m_window = target;
 }
 
-sf::RenderTarget* InputImpl::GetRenderTarget()
+Window* InputImpl::GetWindow()
 {
-	return m_currentRenderTarget;
+	return m_window;
 }
 
 void InputImpl::UpdateKeyStates()
@@ -23,6 +23,19 @@ void InputImpl::UpdateKeyStates()
 		else if (m_keys[i] == UP)
 		{
 			m_keys[i] = NONE;
+		}
+	}
+
+	// same for mouse buttons
+	for (int i = 0; i < sf::Mouse::ButtonCount; ++i)
+	{
+		if (m_mouseButtons[i] == DOWN)
+		{
+			m_mouseButtons[i] = HELD;
+		}
+		else if (m_mouseButtons[i] == UP)
+		{
+			m_mouseButtons[i] = NONE;
 		}
 	}
 }
@@ -48,9 +61,23 @@ void InputImpl::HandleKeyEvent(const sf::Event& event)
 		 
 		m_keys[ind] = UP; 
 	}
-	else
+	
+	// handle mouse buttons
+	sf::Mouse::Button button;
+	if (auto* mouseButton = event.getIf<sf::Event::MouseButtonPressed>())
 	{
-		return;
+		button = mouseButton->button;
+		int ind = (int)button;
+		if (m_mouseButtons[ind] == NONE)
+		{
+			m_mouseButtons[ind] = DOWN;
+		}
+	}
+	else if (auto* mouseButton = event.getIf<sf::Event::MouseButtonReleased>())
+	{
+		button = mouseButton->button;
+		int ind = (int)button;
+		m_mouseButtons[ind] = UP;
 	}
 	
 
@@ -69,6 +96,21 @@ bool InputImpl::GetKeyUp(sf::Keyboard::Scancode key)
 bool InputImpl::GetKeyHeld(sf::Keyboard::Scancode key)
 {
 	return m_keys[(int)key] == HELD;
+}
+
+bool InputImpl::GetMouseButtonDown(sf::Mouse::Button button)
+{
+	return m_mouseButtons[(int)button] == DOWN;
+}
+
+bool InputImpl::GetMouseButtonUp(sf::Mouse::Button button)
+{
+	return m_mouseButtons[(int)button] == UP;
+}
+
+bool InputImpl::GetMouseButtonHeld(sf::Mouse::Button button)
+{
+	return m_mouseButtons[(int)button] == HELD;
 }
 
 InputImpl::InputImpl()

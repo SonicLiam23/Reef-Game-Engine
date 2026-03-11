@@ -14,23 +14,29 @@ struct ENGINE_API Input
 	static bool GetKeyUp(Input::Key key);
 	static bool GetKeyHeld(Input::Key key);
 
+	static bool GetMouseButtonDown(sf::Mouse::Button button);
+	static bool GetMouseButtonUp(sf::Mouse::Button button);
+	static bool GetMouseButtonHeld(sf::Mouse::Button button);
+
 	enum ClickType
 	{
 		NoClick,
 		SingleClick,
-		DoubleClick
+		DoubleClick,
+		Held,
+		Up
 	};
 
 	struct ENGINE_API ClickEvent
 	{
-		ClickType clicked;
+		ClickType clickType;
 		Math::Vector2i position;
 	};
 
 
 
 	using MouseButton = sf::Mouse::Button;
-	static ClickEvent GetMouseButton(MouseButton button = MouseButton::Left);
+	static ClickEvent GetMouseButtonInfo(MouseButton button = MouseButton::Left);
 private:
 	static sf::Time doubleClickThreshold;
 	static sf::Clock lastClickTime[(int)sf::Mouse::Button::Count];

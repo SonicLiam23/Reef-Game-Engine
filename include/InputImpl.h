@@ -23,9 +23,9 @@ public:
 		return instance;
 	}
 
-	void init(sf::RenderTarget* target);
+	void init(Window* target);
 
-	sf::RenderTarget* GetRenderTarget();
+	Window* GetWindow();
 	void UpdateKeyStates();
 	void HandleKeyEvent(const sf::Event& event);
 
@@ -33,6 +33,11 @@ public:
 	bool GetKeyDown(sf::Keyboard::Scancode key);
 	bool GetKeyUp(sf::Keyboard::Scancode key);
 	bool GetKeyHeld(sf::Keyboard::Scancode key);
+
+	// mouse
+	bool GetMouseButtonDown(sf::Mouse::Button button);
+	bool GetMouseButtonUp(sf::Mouse::Button button);
+	bool GetMouseButtonHeld(sf::Mouse::Button button);
 
 private:
 	enum KeyState
@@ -44,6 +49,7 @@ private:
 	};
 
 	KeyState m_keys[sf::Keyboard::ScancodeCount];
+	KeyState m_mouseButtons[sf::Mouse::ButtonCount];
 	InputImpl();
-	sf::RenderTarget* m_currentRenderTarget;
+	Window* m_window;
 };

@@ -1,11 +1,34 @@
 [
     {
-        "m_id": "Mdsjkadhskja1111111111111111",
+        "m_id": "Mdsjkadhskja11111",
+        "m_localImgPath": "Images\\Screenshot 2024-02-01 210252.jpg",
+        "m_rect": {
+            "position": {
+                "x": 719.0,
+                "y": 339.0
+            },
+            "size": {
+                "x": 482.0,
+                "y": 258.0
+            }
+        },
+        "m_scripts": [
+            {
+                "data": {
+                    "moveAmt": 129
+                },
+                "type": "MoveRight"
+            }
+        ],
+        "name": "NO_NAME"
+    },
+    {
+        "m_id": "309671111",
         "m_localImgPath": "",
         "m_rect": {
             "position": {
-                "x": 142.0,
-                "y": 512.0
+                "x": 186.0,
+                "y": 307.0
             },
             "size": {
                 "x": 64.0,
@@ -13,52 +36,6 @@
             }
         },
         "m_scripts": [],
-        "name": "NO_NAME"
-    },
-    {
-        "m_id": "2180811111111111111111",
-        "m_localImgPath": "Images\\pin.png",
-        "m_rect": {
-            "position": {
-                "x": 156.0,
-                "y": 362.0
-            },
-            "size": {
-                "x": 64.0,
-                "y": 64.0
-            }
-        },
-        "m_scripts": [
-            {
-                "data": {
-                    "moveAmt": 9
-                },
-                "type": "MoveRight"
-            }
-        ],
-        "name": "test"
-    },
-    {
-        "m_id": "3053311111",
-        "m_localImgPath": "Images\\Screenshot 2024-02-01 210252.jpg",
-        "m_rect": {
-            "position": {
-                "x": 498.0,
-                "y": 219.0
-            },
-            "size": {
-                "x": 874.0,
-                "y": 602.0
-            }
-        },
-        "m_scripts": [
-            {
-                "data": {
-                    "moveAmt": 4
-                },
-                "type": "MoveRight"
-            }
-        ],
         "name": "NO_NAME"
     }
 ]

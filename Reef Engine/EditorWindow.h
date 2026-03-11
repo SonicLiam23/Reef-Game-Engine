@@ -32,6 +32,10 @@ private:
     bool m_selectedObjectThisFrame;
     Object* m_selectedObject;
     int m_selectedScriptIdx;
+	// activated on double click then hold. allows user to move object/camera by dragging mouse
+    bool m_moveMode;
+	Object* m_movingObject;
+	Math::Vector2f m_mouseOffsetFromObject;
 
     std::unordered_map<Object*, sf::RectangleShape> m_outlines;
 
@@ -54,9 +58,3 @@ public:
     Viewport* GetViewport();
 
 };
-
-
-
-
-
- 

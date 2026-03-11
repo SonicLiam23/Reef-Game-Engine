@@ -76,4 +76,3 @@ private:
 
 void to_json(nlohmann::json& j, const Object& obj);
 void from_json(const nlohmann::json& j, Object& obj);
-

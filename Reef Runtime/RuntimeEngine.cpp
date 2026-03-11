@@ -24,7 +24,7 @@ void RuntimeEngine::Start()
 	m_window = new RuntimeWindow(100, "Reef Engine");
 	m_window->Start(this);
 
-	InputImpl::Get().init(m_window->Get());
+	InputImpl::Get().init(m_window);
 
 	LoadObjects();
 

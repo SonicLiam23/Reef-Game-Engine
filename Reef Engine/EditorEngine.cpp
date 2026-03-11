@@ -50,8 +50,7 @@ void EditorEngine::Update()
 	m_window->Update(m_objects);
 	// do not run update on the objects themselves, this is the editor
 	// detect which object to select
-
-	if (Input::GetMouseButton(Input::MouseButton::Left).clicked == Input::SingleClick)
+	if (Input::GetMouseButtonInfo(Input::MouseButton::Left).clickType)
 	{
 		// get mouse position relative to the viewport
 		std::optional<Math::Vector2f> mousePosOnViewport = m_window->GetViewport()->GetMousePos();

@@ -2,8 +2,16 @@
 #include "InputImpl.h"
 #include "SFML/Window/Mouse.hpp"
 #include "SFML/Graphics/RenderTarget.hpp"
+#ifdef _DEBUG
+#define DEBUG_CODE(x) x
+#include <iostream>
+#else _DEBUG
+#define DEBUG_CODE(x)
+#endif
 
-sf::Time Input::doubleClickThreshold = sf::milliseconds(100);
+
+
+sf::Time Input::doubleClickThreshold = sf::milliseconds(200);
 sf::Clock Input::lastClickTime[(int)sf::Mouse::Button::Count];
 
 bool Input::GetKeyDown(Input::Key key)
@@ -21,31 +29,62 @@ bool Input::GetKeyHeld(Input::Key key)
 	return InputImpl::Get().GetKeyHeld(key);
 }
 
+bool Input::GetMouseButtonDown(MouseButton button)
+{
+	if (InputImpl::Get().GetMouseButtonDown(button))
+	{
+		sf::Time timeSinceLastClick = lastClickTime[(int)button].restart();
+		return true;
+	}
+	return false;
+}
+
+bool Input::GetMouseButtonUp(MouseButton button)
+{
+	return InputImpl::Get().GetMouseButtonUp(button);
+}
+
+bool Input::GetMouseButtonHeld(MouseButton button)
+{
+	return InputImpl::Get().GetMouseButtonHeld(button);
+}
+
 // creates a click event and sets its clicked value to true if the button is currently being pressed, 
 // and false otherwise. It also sets the position of the click event to the current mouse position
-Input::ClickEvent Input::GetMouseButton(MouseButton button)
+Input::ClickEvent Input::GetMouseButtonInfo(MouseButton button)
 {
 	ClickEvent event;
 	
 	// detect if button was pressed twice
-	if (sf::Mouse::isButtonPressed(button))
+	if (InputImpl::Get().GetMouseButtonDown(button))
 	{
-		sf::Time timeSinceLastClick = lastClickTime[(int)button].getElapsedTime();
+		sf::Time timeSinceLastClick = lastClickTime[(int)button].restart();
+		DEBUG_CODE(std::cout << "Time since last click: " << timeSinceLastClick.asMilliseconds() << " ms\n";)
 		if (timeSinceLastClick < doubleClickThreshold)
 		{
-			event.clicked = DoubleClick;
+			event.clickType = DoubleClick;
 		}
 		else
 		{
-			event.clicked = SingleClick;
+			event.clickType = SingleClick;
 		}
-		lastClickTime[(int)button].restart();
 	}
 	else
 	{
-		event.clicked = NoClick;
+		if (InputImpl::Get().GetMouseButtonHeld(button))
+		{
+			event.clickType = Held;
+		}
+		else if (InputImpl::Get().GetMouseButtonUp(button))
+		{
+			event.clickType = Up;
+		}
+		else
+		{
+			event.clickType = NoClick;
+		}
 	}
-	event.position = (Math::Vector2f)InputImpl::Get().GetRenderTarget()->mapPixelToCoords(sf::Mouse::getPosition());
+	event.position = InputImpl::Get().GetWindow()->ConvertScreenPointToWorldCoords((Math::Vector2i)sf::Mouse::getPosition());
 
 	return event;
 }
