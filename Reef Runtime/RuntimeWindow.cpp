@@ -39,3 +39,8 @@ void RuntimeWindow::Update(ObjectVec& objects)
 	}
 	m_window->display();
 }
+
+Math::Vector2i RuntimeWindow::ConvertScreenPointToWorldCoords(Math::Vector2i point)
+{
+	return Math::Vector2i();
+}

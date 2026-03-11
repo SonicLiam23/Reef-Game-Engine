@@ -12,7 +12,6 @@ void MoveRight::Update()
 
 void MoveRight::Start()
 {
-	moveAmt = 0;
 }
 
 

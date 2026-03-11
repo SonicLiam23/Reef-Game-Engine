@@ -13,7 +13,7 @@ public:
 	sf::RenderWindow* Get();
 
 	virtual void Update(ObjectVec& objects) = 0;
-	virtual Math::Vector2i ConvertScreenPointToWorldCoords(Math::Vector2i& point) = 0;
+	virtual Math::Vector2i ConvertScreenPointToWorldCoords(Math::Vector2i point) = 0;
 
 protected:
 	sf::RenderWindow* m_window;

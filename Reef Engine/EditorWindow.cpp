@@ -11,6 +11,23 @@
 #include "Script.h"
 #include "Iserializable.h"
 #include "InputImpl.h"
+#include "InspectorMemberDrawers.h"
+
+namespace
+{
+	inline std::vector<std::string_view> SplitNames(const char* names) {
+		std::vector<std::string_view> result;
+		const char* start = names;
+		while (*start) {
+			const char* comma = strchr(start, ',');
+			if (!comma) comma = start + strlen(start);
+			result.emplace_back(start, comma - start);
+			if (*comma == ',') comma++;
+			start = comma;
+		}
+		return result;
+	}
+}
 
 void HelpMarker(const char* desc)
 {
@@ -108,6 +125,7 @@ void EditorWindow::Update(ObjectVec& objectsToRender)
 	m_viewPortTex->display();
 
 
+
 	SetImGuiElements();
 
 	m_window->clear();
@@ -183,6 +201,17 @@ void EditorWindow::SetImGuiElements()
 		m_selectedObject->SetPosition(objRect.position);
 		m_selectedObject->SetSize(objRect.size);
 
+		ScriptVec& scripts = m_selectedObject->GetScripts();
+		for (ScriptUPtr& script : scripts)
+		{
+			ImGui::Text(script->GetTypeName().c_str());
+			std::vector<MemberInfo>& members = script->REEF_MEMBERS_REFLECTION;
+			for (MemberInfo& member : members)
+			{
+				ImGui::DrawMemberProxy(member);
+			}
+		}
+
 		if (ImGui::Button("Add Image", m_buttonSize))
 		{
 			m_selectedObject->SetTexture(FileUtils::GetImageAndCopyToProject());
@@ -205,11 +234,11 @@ void EditorWindow::SetImGuiElements()
 
 		if (ImGui::BeginListBox("##listbox 2", ImVec2(-FLT_MIN, 5 * ImGui::GetTextLineHeightWithSpacing())))
 		{
-			for (int n = 0; n < m_selectedObject->GetScripts().size(); n++)
+			for (int n = 0; n < scripts.size(); n++)
 			{
 				bool is_selected = m_selectedScriptIdx == n;
 				ImGuiSelectableFlags flags = (m_selectedScriptIdx == n) ? ImGuiSelectableFlags_Highlight : 0;
-				if (ImGui::Selectable(m_selectedObject->GetScripts().at(n)->GetTypeName().c_str(), is_selected, flags))
+				if (ImGui::Selectable(scripts.at(n)->GetTypeName().c_str(), is_selected, flags))
 					m_selectedScriptIdx = n;
 
 				// Set the initial focus when opening the combo (scrolling + keyboard navigation focus)
@@ -273,7 +302,7 @@ void EditorWindow::SetSelectedObject(Object* newSelected)
 	m_selectedObjectThisFrame = true;
 }
 
-Math::Vector2i EditorWindow::ConvertScreenPointToWorldCoords(Math::Vector2i& point)
+Math::Vector2i EditorWindow::ConvertScreenPointToWorldCoords(Math::Vector2i point)
 {
 	// convert screen point to viewport local point
 	float localX = point.x - m_viewport.position.x;
@@ -300,6 +329,11 @@ std::optional<Math::Vector2f> EditorWindow::Viewport::GetMousePos()
 	}
 
 	ImVec2 mousePos = ImGui::GetMousePos();
+	std::cout << "ImGui:\nx: " << mousePos.x << "\ny: " << mousePos.y << std::endl;
+
+	sf::Vector2i sfmouse = sf::Mouse::getPosition();
+	std::cout << "SFML:\nx: " << sfmouse.x << "\ny: " << sfmouse.y << std::endl;
+
 
 	return parent->ConvertScreenPointToWorldCoords(Math::Vector2i(static_cast<int>(mousePos.x), static_cast<int>(mousePos.y)));
 }

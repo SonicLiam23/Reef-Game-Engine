@@ -7,7 +7,7 @@ class SCRIPT MoveRight : public Script
 	void Update() override;
 	void Start() override;
 
-	SERIALIZE(MoveRight, moveAmt);
+	SERIALIZE(MoveRight, moveAmt)
 };
 
 REGISTER_SERIALIZABLE(MoveRight);

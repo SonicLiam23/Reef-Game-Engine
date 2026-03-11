@@ -53,5 +53,8 @@
     <ClInclude Include="EditorEngine.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="InspectorMemberDrawers.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

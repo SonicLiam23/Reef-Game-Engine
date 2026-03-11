@@ -218,6 +218,7 @@ void from_json(const nlohmann::json& j, Object& obj)
 
 			obj.m_scripts.push_back(std::move(script));
 			obj.m_scripts.back()->AttachedObject = &obj;
+			obj.m_scripts.back()->REEF_ENGINE_INIT();
 		}
 	}
 }
