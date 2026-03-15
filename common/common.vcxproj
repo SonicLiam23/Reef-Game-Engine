@@ -22,7 +22,6 @@
     <ClCompile Include="Engine.cpp" />
     <ClCompile Include="Input.cpp" />
     <ClCompile Include="InputImpl.cpp" />
-    <ClCompile Include="MainCamera.cpp" />
     <ClCompile Include="Object.cpp" />
     <ClCompile Include="SerializableFactory.cpp" />
     <ClCompile Include="SpriteUtils.cpp" />
@@ -36,7 +35,6 @@
     <ClInclude Include="..\include\Input.h" />
     <ClInclude Include="..\include\InputImpl.h" />
     <ClInclude Include="..\include\ISerializable.h" />
-    <ClInclude Include="..\include\MainCamera.h" />
     <ClInclude Include="..\include\Object.h" />
     <ClInclude Include="..\include\Rect.h" />
     <ClInclude Include="..\include\Reef-Common.h" />

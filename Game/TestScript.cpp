@@ -1,6 +1,7 @@
 #include "TestScript.h"
 #include <iostream>
 #include "Input.h"
+#include "RuntimeEngine.h"
 
 void TestScript::Update()
 {

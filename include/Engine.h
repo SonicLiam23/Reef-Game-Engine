@@ -1,5 +1,5 @@
 #pragma once
-class Window;
+class Window; class Camera;
 #include <string>
 #include "EngineTypes.h"
 #include "Object.h"
@@ -8,7 +8,7 @@ class ENGINE_API Engine
 {
 public:
 	Engine();
-	~Engine() = default;
+	~Engine();
 
 	virtual void Start() = 0;
 	virtual void Update() = 0;
@@ -23,6 +23,10 @@ public:
 	void SaveObjects();
 	void LoadObjects();
 
+	virtual void SetCameraPos(const Math::Vector2f& newPosition) = 0;
+	virtual void SetCameraPos(Object* obj) = 0;
+	virtual void AttachCameraToObject(Object* obj) = 0;
+
 	Engine(const Engine&) = delete;
 	Engine& operator=(const Engine&) = delete;
 
@@ -34,6 +38,7 @@ protected:
 
 	bool m_isInitialized;
 	bool m_isRunning;
+	
 
 };
 

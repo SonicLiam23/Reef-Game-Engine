@@ -3,13 +3,20 @@
 #include "json.hpp"
 #include <fstream>
 #include "SerializableFactory.h"
+ 
 
-Engine::Engine() : m_isInitialized(false), m_isRunning(false)
+Engine::Engine() : m_isInitialized(false), m_isRunning(false), m_camera(nullptr), m_heapCamera(nullptr)
 {
+}
+
+Engine::~Engine()
+{
+
 }
 
 Object* Engine::AddObject(const std::string objName)
 {
+	// O(1) addition, IDs are not guaranteed to be sequential, but they are guaranteed to be unique
 	Object* obj = m_objects.emplace_back(std::make_unique<Object>()).get();
 
 	obj->name = objName;

@@ -4,6 +4,7 @@
 #include "SFML/Graphics/Texture.hpp"
 #include "SFML/Graphics/Rect.hpp"
 #include "SerializableFactory.h"
+ 
 
 
 Object::Object() :  m_sprite(SpriteUtils::EmptyTexture()), m_markedForDeletion(false)
@@ -69,9 +70,9 @@ Math::Vector2f Object::GetPosition()
 	return m_rect.position;
 }
 
-Math::Vector2f Object::GetMiddle()
+const Math::Vector2f* const Object::GetMiddle() const
 {
-	return (Math::Vector2f)m_sprite.getGlobalBounds().getCenter();
+	return &m_middle;
 }
 
 Math::Rect Object::GetRect()
@@ -147,6 +148,7 @@ bool Object::IsColliding(Math::Vector2f point)
 
 void Object::Update()
 {
+	m_middle = (Math::Vector2f)m_sprite.getGlobalBounds().getCenter();
 	for (ScriptUPtr& script : m_scripts)
 	{
 		script->Update();

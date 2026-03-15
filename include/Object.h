@@ -24,7 +24,8 @@ public:
 	void SetSize(Math::Vector2f newSize);
 	Math::Vector2f GetSize();
 	Math::Vector2f GetPosition();
-	Math::Vector2f GetMiddle();
+	// pointer so you can track it, do not try to edit or delete 
+	const Math::Vector2f* const GetMiddle() const;
 	Math::Rect GetRect();
 	std::string GetImagePath();
 	bool IsColliding(Math::Vector2f point);
@@ -61,6 +62,7 @@ private:
 	ScriptVec m_scripts;
 	std::string m_localImgPath;
 	Math::Rect m_rect;
+	Math::Vector2f m_middle;
 	std::string m_id;
 	bool m_markedForDeletion;
 	

@@ -130,6 +130,9 @@ void EditorWindow::Update(ObjectVec& objectsToRender)
 	}
 
 	m_viewPortTex->clear();
+
+	m_view.setCenter(GetCameraPosition());
+
 	for (ObjectUPtr& objectUptr: objectsToRender)
 	{
 		Object* object = objectUptr.get();
