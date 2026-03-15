@@ -89,7 +89,8 @@ void Object::SetID(std::string newID)
 	std::string temp = newID;
 	int count = 1;
 
-	while (GetIDMap().find(temp) != GetIDMap().end())
+	ObjectIDMap& idMap = GetIDMap();
+	while (idMap.find(temp) != idMap.end())
 	{
 		temp = newID + std::to_string(count);
 		++count;
@@ -97,11 +98,11 @@ void Object::SetID(std::string newID)
 
 	newID = temp;
 
-	size_t ind = GetIDMap()[m_id];
-	GetIDMap().erase(m_id);
+	size_t ind = idMap[m_id];
+	idMap.erase(m_id);
 
 	m_id = newID;
-	GetIDMap()[newID] = ind;
+	idMap[newID] = ind;
 }
 
 std::string Object::GetID()

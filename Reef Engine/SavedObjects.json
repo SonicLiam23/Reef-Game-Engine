@@ -1,11 +1,11 @@
 [
     {
-        "m_id": "Mdsjkadhskja11111",
+        "m_id": "obj2",
         "m_localImgPath": "Images\\Screenshot 2024-02-01 210252.jpg",
         "m_rect": {
             "position": {
-                "x": 719.0,
-                "y": 339.0
+                "x": 616.0,
+                "y": 318.0
             },
             "size": {
                 "x": 482.0,
@@ -23,12 +23,12 @@
         "name": "NO_NAME"
     },
     {
-        "m_id": "309671111",
+        "m_id": "obj1",
         "m_localImgPath": "",
         "m_rect": {
             "position": {
-                "x": 186.0,
-                "y": 307.0
+                "x": 84.0,
+                "y": 44.0
             },
             "size": {
                 "x": 64.0,
