@@ -35,7 +35,7 @@ private:
 	// activated on double click then hold. allows user to move object/camera by dragging mouse
     bool m_moveMode;
 	Object* m_movingObject;
-	Math::Vector2f m_mouseOffsetFromObject;
+	Math::Vector2f m_mouseOffset;
 
     std::unordered_map<Object*, sf::RectangleShape> m_outlines;
 

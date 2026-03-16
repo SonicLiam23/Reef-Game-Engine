@@ -111,7 +111,11 @@ void EditorWindow::Update(ObjectVec& objectsToRender)
 		m_moveMode = true;
 		m_movingObject = m_selectedObject;
 		if (m_selectedObject)
-			m_mouseOffsetFromObject = m_viewport.GetMousePos().value_or(Math::Vector2f{0 , 0}) - m_movingObject->GetPosition();
+			m_mouseOffset = m_viewport.GetMousePos().value_or(Math::Vector2f{ 0 , 0 }) - m_movingObject->GetPosition();
+		else
+			// i hate this
+			m_mouseOffset = (Math::Vector2f)(sf::Vector2f)sf::Mouse::getPosition(); // get the starting mouse position as screen space coords, so that the camera movement can be calculated relative to that starting point
+
 	}
 	else if (Input::GetMouseButtonInfo().clickType == Input::ClickType::Up)
 	{
@@ -125,11 +129,17 @@ void EditorWindow::Update(ObjectVec& objectsToRender)
 			// ensure the current object isnt "lost" when hovering over another object, as the hovered object will become selected
 			m_selectedObject = m_movingObject;
 			Math::Vector2f mousePos = m_viewport.GetMousePos().value_or(m_movingObject->GetPosition());
-			m_movingObject->SetPosition(mousePos - m_mouseOffsetFromObject);
+			m_movingObject->SetPosition(mousePos - m_mouseOffset);
 		}
 		else
 		{
-			// move camera
+			Math::Vector2f cameraPos = GetCameraPosition();
+			// mouse pos in screen space
+			Math::Vector2f mousePos = (Math::Vector2f)(sf::Vector2f)sf::Mouse::getPosition();
+			
+			// get current mouse position, get the offset from the position where the double click was activated
+			SetCameraPosition(cameraPos + (m_mouseOffset - mousePos));
+			m_mouseOffset = mousePos;
 		}
 	}
 	else
@@ -141,6 +151,7 @@ void EditorWindow::Update(ObjectVec& objectsToRender)
 	m_viewPortTex->clear();
 
 	m_view.setCenter(GetCameraPosition());
+	m_viewPortTex->setView(m_view);
 
 	for (ObjectUPtr& objectUptr: objectsToRender)
 	{
@@ -370,11 +381,6 @@ std::optional<Math::Vector2f> EditorWindow::Viewport::GetMousePos()
 	}
 
 	ImVec2 mousePos = ImGui::GetMousePos();
-	std::cout << "ImGui:\nx: " << mousePos.x << "\ny: " << mousePos.y << std::endl;
-
-	sf::Vector2i sfmouse = sf::Mouse::getPosition();
-	std::cout << "SFML:\nx: " << sfmouse.x << "\ny: " << sfmouse.y << std::endl;
-
 
 	return parent->ConvertScreenPointToWorldCoords(Math::Vector2i(static_cast<int>(mousePos.x), static_cast<int>(mousePos.y)));
 }

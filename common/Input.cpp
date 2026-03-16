@@ -2,13 +2,6 @@
 #include "InputImpl.h"
 #include "SFML/Window/Mouse.hpp"
 #include "SFML/Graphics/RenderTarget.hpp"
-#ifdef _DEBUG
-#define DEBUG_CODE(x) x
-#include <iostream>
-#else _DEBUG
-#define DEBUG_CODE(x)
-#endif
-
 
 
 sf::Time Input::doubleClickThreshold = sf::milliseconds(200);
@@ -59,7 +52,6 @@ Input::ClickEvent Input::GetMouseButtonInfo(MouseButton button)
 	if (InputImpl::Get().GetMouseButtonDown(button))
 	{
 		sf::Time timeSinceLastClick = lastClickTime[(int)button].restart();
-		DEBUG_CODE(std::cout << "Time since last click: " << timeSinceLastClick.asMilliseconds() << " ms\n";)
 		if (timeSinceLastClick < doubleClickThreshold)
 		{
 			event.clickType = DoubleClick;
