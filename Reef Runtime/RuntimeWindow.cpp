@@ -12,7 +12,7 @@ void RuntimeWindow::Start(RuntimeEngine* engine)
 	m_attachedEngine = engine;
 
 	m_window->setFramerateLimit(60);
-
+	m_view.setSize((sf::Vector2f)m_window->getSize());
 }
 
 void RuntimeWindow::Update(ObjectVec& objects)
@@ -33,6 +33,10 @@ void RuntimeWindow::Update(ObjectVec& objects)
 	}
 
 	m_window->clear();
+
+	m_view.setCenter(*m_realViewCenter);
+	m_window->setView(m_view);
+
 	for (ObjectUPtr& obj : objects)
 	{
 		m_window->draw(*obj.get());

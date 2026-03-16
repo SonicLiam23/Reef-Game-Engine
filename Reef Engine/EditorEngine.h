@@ -1,9 +1,9 @@
 #pragma once
 #include <unordered_map>
-#include "Engine.h"
+#include "EngineImpl.h"
 
 class EditorWindow;
-class EditorEngine : public Engine
+class EditorEngine : public EngineImpl
 {
 public:
     // singleton

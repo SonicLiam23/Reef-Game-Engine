@@ -82,6 +82,10 @@ void EditorWindow::Start(EditorEngine* engine)
 	m_selectedObjectThisFrame = false;
 
 	m_selectedScriptIdx = 0;
+
+	// NEW STUFF
+	m_view.setSize({ (float)m_viewPortTex->getSize().x, (float)m_viewPortTex->getSize().y });
+	m_viewPortTex->setView(m_view);
 }
 
 void EditorWindow::Update(ObjectVec& objectsToRender)
@@ -114,7 +118,7 @@ void EditorWindow::Update(ObjectVec& objectsToRender)
 		m_moveMode = false;
 	}
 
-	if (m_moveMode)
+	if (m_moveMode && m_viewport.mouseHovered)
 	{
 		if (m_movingObject)
 		{
@@ -127,6 +131,11 @@ void EditorWindow::Update(ObjectVec& objectsToRender)
 		{
 			// move camera
 		}
+	}
+	else
+	{
+		m_moveMode = false;
+		m_movingObject = nullptr;
 	}
 
 	m_viewPortTex->clear();
@@ -347,7 +356,7 @@ Math::Vector2i EditorWindow::ConvertScreenPointToWorldCoords(Math::Vector2i poin
 	localX *= scaleX;
 	localY *= scaleY;
 	// convert pixel coordinates to world coordinates using SFML view
-	sf::Vector2f world = m_window->mapPixelToCoords(sf::Vector2i(static_cast<int>(localX), static_cast<int>(localY)));
+	sf::Vector2f world = m_viewPortTex->mapPixelToCoords(sf::Vector2i(static_cast<int>(localX), static_cast<int>(localY)));
 	return Math::Vector2i(static_cast<int>(world.x), static_cast<int>(world.y));
 }
 

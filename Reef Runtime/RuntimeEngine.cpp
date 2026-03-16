@@ -23,6 +23,7 @@ void RuntimeEngine::Start()
 
 	m_window = new RuntimeWindow(100, "Reef Engine");
 	m_window->Start(this);
+	m_windowBase = (Window*)m_window;
 
 	InputImpl::Get().init(m_window);
 
@@ -55,10 +56,8 @@ void RuntimeEngine::Update()
 
 void RuntimeEngine::End()
 {
-	for (ObjectUPtr& obj : m_objects)
-	{
-		DestroyObject(obj->GetID());
-	}
+	// unique ptrs will automatically clean up memory, just need to clear the vector
+	m_objects.clear();
 	m_isRunning = false;
 
 	SpriteUtils::End();

@@ -1,21 +1,21 @@
 [
     {
-        "m_id": "obj2",
+        "m_id": "215821",
         "m_localImgPath": "Images\\Screenshot 2024-02-01 210252.jpg",
         "m_rect": {
             "position": {
-                "x": 616.0,
-                "y": 318.0
+                "x": -207.0,
+                "y": 188.0
             },
             "size": {
-                "x": 482.0,
-                "y": 258.0
+                "x": 548.0,
+                "y": 548.0
             }
         },
         "m_scripts": [
             {
                 "data": {
-                    "moveAmt": 129
+                    "moveAmt": 5
                 },
                 "type": "MoveRight"
             }
@@ -23,19 +23,33 @@
         "name": "NO_NAME"
     },
     {
-        "m_id": "obj1",
-        "m_localImgPath": "",
+        "m_id": "29811",
+        "m_localImgPath": "Images\\noFilter.png",
         "m_rect": {
             "position": {
-                "x": 84.0,
-                "y": 44.0
+                "x": 567.0,
+                "y": 312.0
             },
             "size": {
                 "x": 64.0,
                 "y": 64.0
             }
         },
-        "m_scripts": [],
+        "m_scripts": [
+            {
+                "data": {
+                    "moveAmt": 7
+                },
+                "type": "MoveRight"
+            },
+            {
+                "data": {
+                    "name": "",
+                    "num": 0
+                },
+                "type": "TestScript"
+            }
+        ],
         "name": "NO_NAME"
     }
 ]

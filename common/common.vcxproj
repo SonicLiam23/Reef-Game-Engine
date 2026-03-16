@@ -20,6 +20,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Engine.cpp" />
+    <ClCompile Include="EngineImpl.cpp" />
     <ClCompile Include="Input.cpp" />
     <ClCompile Include="InputImpl.cpp" />
     <ClCompile Include="Object.cpp" />
@@ -29,6 +30,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\include\Engine.h" />
+    <ClInclude Include="..\include\EngineImpl.h" />
     <ClInclude Include="..\include\EngineAPI.h" />
     <ClInclude Include="..\include\EngineTypes.h" />
     <ClInclude Include="..\include\FileUtils.h" />

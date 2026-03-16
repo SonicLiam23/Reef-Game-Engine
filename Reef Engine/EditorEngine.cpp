@@ -9,8 +9,9 @@
 #include <windows.h>
 #include <string>
 #include "Input.h"
+#include "Engine.h"
 
-EditorEngine::EditorEngine() : Engine()
+EditorEngine::EditorEngine() : EngineImpl()
 {
 	srand(time(NULL));
 }
@@ -34,6 +35,8 @@ void EditorEngine::Start()
 
 	m_window = new EditorWindow(100, "Reef Engine");
 	m_window->Start(this);
+
+	m_windowBase = (Window*)m_window;
 
 	m_isRunning = true;
 
@@ -85,10 +88,10 @@ void EditorEngine::Update()
 void EditorEngine::End()
 {
 	SaveObjects();
-	for (ObjectUPtr& obj : m_objects)
-	{
-		DestroyObject(obj->GetID());
-	}
+	
+	// unique ptrs will automatically clean up memory, just need to clear the vector
+	m_objects.clear();
+
 	m_isRunning = false;
 	
 	SpriteUtils::End();

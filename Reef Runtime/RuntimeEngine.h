@@ -1,10 +1,10 @@
 #pragma once
 #include "EngineAPI.h"
-#include "Engine.h"
+#include "EngineImpl.h"
 #include <Windows.h>
 class RuntimeWindow;
 class RuntimeEngine :
-    public Engine
+    public EngineImpl
 {
 public:
     static RuntimeEngine& Get();

@@ -1,7 +1,7 @@
 #include "TestScript.h"
 #include <iostream>
 #include "Input.h"
-#include "RuntimeEngine.h"
+#include "Engine.h"
 
 void TestScript::Update()
 {
@@ -17,9 +17,12 @@ void TestScript::Update()
 			std::cout << "Object was clicked!\n";
 		}
 	}
+
+	
 }
 
 void TestScript::Start()
 {
 	name = "test passed";
+	Engine::Get().AttachCameraToObject(AttachedObject);
 }
