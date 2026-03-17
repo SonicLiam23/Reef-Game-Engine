@@ -1,5 +1,6 @@
 #pragma once
 #include "SFML/System/Vector2.hpp"
+#include "box2d/b2_math.h"
 #include "json.hpp"
 #include "EngineAPI.h"
 // allows the user to automatically use a Math::Vector2x when needing a sf::Vector2, but not use a sf::Vector2 in place of Math::Vector2
@@ -24,6 +25,14 @@ namespace Math
 
 		inline explicit Vector2<T>(const sf::Vector2<T>& v)
 			: x(v.x), y(v.y) {}
+
+		inline operator b2Vec2() const
+		{
+			return b2Vec2(x, y);
+		}
+		inline explicit Vector2<T>(const b2Vec2& v)
+			: x(v.x), y(v.y) {}
+
 
 		template <typename U>
 		constexpr Vector2(const Vector2<U>& other) 

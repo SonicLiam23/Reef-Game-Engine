@@ -4,6 +4,7 @@
 #include <fstream>
 #include "SerializableFactory.h"
 #include "Engine.h"
+#include "box2d/box2d.h"
  
 
 EngineImpl::EngineImpl() : m_isInitialized(false), m_isRunning(false)
@@ -79,6 +80,7 @@ void EngineImpl::SaveObjects()
 
 void EngineImpl::LoadObjects()
 {
+	b2World world(b2Vec2(0.0f, -9.8f));
 	m_objects.clear();
 	std::ifstream file;
 	file.open("SavedObjects.json");
