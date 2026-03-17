@@ -3,6 +3,7 @@
 #include "Vector2.h"
 #include "Input.h"
 #include <iostream>
+#include "Engine.h"
 
 void MoveRight::Update()
 {
@@ -18,6 +19,7 @@ void MoveRight::Update()
 
 void MoveRight::Start()
 {
+	Engine::Get().AttachCameraToObject(AttachedObject);
 
 }
 
