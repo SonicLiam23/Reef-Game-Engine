@@ -8,6 +8,7 @@
 #include "EngineAPI.h"
 #include "Script.h"
 #include "SerializableFactory.h"
+#include "PhysicsComponent.h"
 
 
 class ENGINE_API Object : public sf::Drawable
@@ -47,7 +48,7 @@ public:
 
 	Object(Object&&) = default;
 	Object& operator=(Object&&) = default;
-	
+	PhysicsComponent physicsComponent;
 
 	~Object();
 

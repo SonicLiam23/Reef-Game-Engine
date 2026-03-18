@@ -24,6 +24,7 @@
     <ClCompile Include="Input.cpp" />
     <ClCompile Include="InputImpl.cpp" />
     <ClCompile Include="Object.cpp" />
+    <ClCompile Include="PhysicsComponent.cpp" />
     <ClCompile Include="PhysicsEngine.cpp" />
     <ClCompile Include="SerializableFactory.cpp" />
     <ClCompile Include="SpriteUtils.cpp" />
@@ -39,6 +40,7 @@
     <ClInclude Include="..\include\InputImpl.h" />
     <ClInclude Include="..\include\ISerializable.h" />
     <ClInclude Include="..\include\Object.h" />
+    <ClInclude Include="..\include\PhysicsComponent.h" />
     <ClInclude Include="..\include\Rect.h" />
     <ClInclude Include="..\include\Reef-Common.h" />
     <ClInclude Include="..\include\Script.h" />

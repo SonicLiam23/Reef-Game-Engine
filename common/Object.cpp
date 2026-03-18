@@ -8,6 +8,7 @@
 
 
 
+
 Object::Object() :  m_sprite(SpriteUtils::EmptyTexture()), m_markedForDeletion(false)
 {
 }
