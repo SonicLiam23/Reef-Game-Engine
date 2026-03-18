@@ -4,7 +4,8 @@
 #include "SFML/Graphics/Texture.hpp"
 #include "SFML/Graphics/Rect.hpp"
 #include "SerializableFactory.h"
- 
+#include "PhysicsEngine.h"
+
 
 
 Object::Object() :  m_sprite(SpriteUtils::EmptyTexture()), m_markedForDeletion(false)
@@ -28,6 +29,7 @@ void Object::Init()
 
 	// if user edits save file so 2 objects have the same ID, ensure its overridden
 	SetID(m_id);
+	GetIDMap()[m_id] = GetIDMap().size() - 1;
 }
 
 void Object::Start()

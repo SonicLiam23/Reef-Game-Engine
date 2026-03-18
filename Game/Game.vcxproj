@@ -138,10 +138,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Controller.h" />
     <ClInclude Include="MoveRight.h" />
     <ClInclude Include="TestScript.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Controller.cpp" />
     <ClCompile Include="GameExport.h" />
     <ClCompile Include="MoveRight.cpp" />
     <ClCompile Include="TestScript.cpp" />

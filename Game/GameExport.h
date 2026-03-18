@@ -63,3 +63,11 @@ inline static ClassName##_Registrator global_##ClassName##_registrator;
     void Deserialize(const nlohmann::json& j) override { try { from_json(j, *this); } catch (const std::exception& e) { std::cout << e.what() << std::endl; } } \
     std::string GetTypeName() const override { return #ClassName; } \
     void REEF_ENGINE_INIT() override { CreateMemberInfo(REEF_MEMBERS_REFLECTION, #__VA_ARGS__, __VA_ARGS__); }
+
+#define SERIALIZE_NO_MEMBERS(ClassName) \
+    public: \
+    virtual ~ClassName() = default; \
+    nlohmann::json Serialize() const override { return nlohmann::json(*this); } \
+    void Deserialize(const nlohmann::json& j) override { try { from_json(j, *this); } catch (const std::exception& e) { std::cout << e.what() << std::endl; } } \
+    std::string GetTypeName() const override { return #ClassName; } \
+    void REEF_ENGINE_INIT() override {}

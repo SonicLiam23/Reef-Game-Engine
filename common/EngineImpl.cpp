@@ -33,6 +33,8 @@ Object* EngineImpl::AddObject(const std::string objName)
 
 void EngineImpl::DestroyObject(const std::string& id)
 {
+	auto map = Object::GetIDMap();
+
 	// O(1) deletion using IDs
 	if (Object::GetIDMap().count(id) == 0)
 	{
@@ -80,7 +82,6 @@ void EngineImpl::SaveObjects()
 
 void EngineImpl::LoadObjects()
 {
-	b2World world(b2Vec2(0.0f, -9.8f));
 	m_objects.clear();
 	std::ifstream file;
 	file.open("SavedObjects.json");

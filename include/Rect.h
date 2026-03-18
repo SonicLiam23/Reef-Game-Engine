@@ -7,7 +7,7 @@ namespace Math
 	{
         Math::Vector2f position, size;
 
-        float& x, y, w, h;
+        float &x, &y, &w, &h;
 
         constexpr Rect() : position({0, 0}), size({0 , 0}), x(position.x), y(position.y), w(size.x), h(size.y) {}
         constexpr Rect(float _x, float _y, float _w, float _h) : position(_x, _y), size(_w, _h), x(position.x), y(position.y), w(size.x), h(size.y) {}

@@ -83,7 +83,6 @@ void EditorWindow::Start(EditorEngine* engine)
 
 	m_selectedScriptIdx = 0;
 
-	// NEW STUFF
 	m_view.setSize({ (float)m_viewPortTex->getSize().x, (float)m_viewPortTex->getSize().y });
 	m_viewPortTex->setView(m_view);
 }

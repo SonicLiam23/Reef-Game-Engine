@@ -2,6 +2,7 @@
 #include <iostream>
 #include "Input.h"
 #include "Engine.h"
+#include "Object.h"
 
 void TestScript::Update()
 {
@@ -11,5 +12,4 @@ void TestScript::Update()
 void TestScript::Start()
 {
 	name = "test passed";
-	Engine::Get().AttachCameraToObject(AttachedObject);
 }

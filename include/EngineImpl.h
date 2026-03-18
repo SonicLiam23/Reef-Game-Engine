@@ -4,6 +4,7 @@ class Window; class Engine;
 #include "EngineTypes.h"
 #include "Object.h"
 #include "EngineAPI.h"
+//#include "PhysicsEngine.h"
 
 
 class ENGINE_API EngineImpl
@@ -38,6 +39,7 @@ protected:
 	bool m_isRunning;
 	Engine* m_engineAPI;
 	Window* m_windowBase;
+	//PhysicsEngine m_physicsEngine;
 
 private:
 	friend class Engine;
