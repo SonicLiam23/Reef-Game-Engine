@@ -5,11 +5,11 @@
 #include "SFML/Graphics/Rect.hpp"
 #include "SerializableFactory.h"
 #include "PhysicsEngine.h"
+#include "PhysicsComponent.h"
 
 
 
-
-Object::Object() :  m_sprite(SpriteUtils::EmptyTexture()), m_markedForDeletion(false)
+Object::Object() : m_sprite(SpriteUtils::EmptyTexture()), m_markedForDeletion(false), physicsComponent(nullptr)
 {
 }
 
@@ -156,6 +156,17 @@ void Object::Update()
 	{
 		script->Update();
 	}
+	if (physicsComponent)
+		physicsComponent->Update();
+}
+
+void Object::AddPhysics(PhysicsType type)
+{
+	if (physicsComponent)
+	{
+		delete physicsComponent;
+	}
+	physicsComponent = new PhysicsComponent(this, type);
 }
 
 ObjectIDMap& Object::GetIDMap()
@@ -164,7 +175,13 @@ ObjectIDMap& Object::GetIDMap()
 	return IDMap;
 }
 
-Object::~Object() = default;
+Object::~Object()
+{
+	if (physicsComponent)
+	{
+		delete physicsComponent;
+	}
+}
 
 void Object::ApplyRectToSprite()
 {

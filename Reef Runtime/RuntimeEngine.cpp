@@ -4,6 +4,7 @@
 #include <windows.h>
 #include "SpriteUtils.h"
 #include "InputImpl.h"
+#include "PhysicsEngine.h"
 
 RuntimeEngine& RuntimeEngine::Get()
 {
@@ -38,6 +39,7 @@ void RuntimeEngine::Start()
 
 void RuntimeEngine::Update()
 {
+	EngineImpl::m_physicsEngine.Update();
 	for (ObjectUPtr& obj : m_objects)
 	{
 		obj->Update();

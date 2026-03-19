@@ -41,6 +41,7 @@
     <ClInclude Include="..\include\ISerializable.h" />
     <ClInclude Include="..\include\Object.h" />
     <ClInclude Include="..\include\PhysicsComponent.h" />
+    <ClInclude Include="..\include\PhysicsEngine.h" />
     <ClInclude Include="..\include\Rect.h" />
     <ClInclude Include="..\include\Reef-Common.h" />
     <ClInclude Include="..\include\Script.h" />
@@ -48,7 +49,6 @@
     <ClInclude Include="..\include\SpriteUtils.h" />
     <ClInclude Include="..\include\Vector2.h" />
     <ClInclude Include="..\include\Window.h" />
-    <ClInclude Include="PhysicsEngine.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\Reef Engine\SavedObjects.json" />

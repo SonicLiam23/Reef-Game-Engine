@@ -8,9 +8,9 @@
 #include "EngineAPI.h"
 #include "Script.h"
 #include "SerializableFactory.h"
-#include "PhysicsComponent.h"
 
 
+class PhysicsComponent;
 class ENGINE_API Object : public sf::Drawable
 {
 public:
@@ -38,6 +38,15 @@ public:
 	void RemoveScript(int ind);
 	ScriptVec& GetScripts();
 
+	// move to PhysicsEngine
+	enum PhysicsType
+	{
+		DYNAMIC,
+		STATIC,
+		KINEMATIC
+	};
+	void AddPhysics(PhysicsType type = STATIC);
+
 
 	// public as i was going to add a Get and Set, with no extra validation
 	std::string name;
@@ -48,7 +57,7 @@ public:
 
 	Object(Object&&) = default;
 	Object& operator=(Object&&) = default;
-	PhysicsComponent physicsComponent;
+	PhysicsComponent* physicsComponent;
 
 	~Object();
 

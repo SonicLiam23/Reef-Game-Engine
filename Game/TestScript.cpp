@@ -11,5 +11,5 @@ void TestScript::Update()
 
 void TestScript::Start()
 {
-	name = "test passed";
+	AttachedObject->AddPhysics(Object::PhysicsType::DYNAMIC);
 }

@@ -1,7 +1,8 @@
 #include "PhysicsEngine.h"
+#include "PhysicsComponent.h"
 PhysicsEngine::PhysicsEngine(Math::Vector2f gravity) : m_world(gravity)
 {
-	
+	PhysicsComponent::PhysEngine = this;
 }
 
 void PhysicsEngine::Start()
@@ -15,10 +16,7 @@ void PhysicsEngine::Update()
 
 void PhysicsEngine::End()
 {
-}
 
-void PhysicsEngine::UpdateObject(Object* object)
-{
 }
 
 void PhysicsEngine::SetGravity(Math::Vector2f gravity)

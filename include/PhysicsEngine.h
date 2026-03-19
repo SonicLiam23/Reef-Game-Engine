@@ -1,8 +1,9 @@
 #pragma once
+#include "EngineAPI.h"
 #include "box2d/box2d.h"
 #include "Vector2.h"
 class Object;
-class PhysicsEngine
+class ENGINE_API PhysicsEngine
 {
 private:
 	b2World m_world;
@@ -12,7 +13,9 @@ public:
 	void Start();
 	void Update();
 	void End();
-	void UpdateObject(Object* object);
 	void SetGravity(Math::Vector2f gravity);
+
+private:
+	friend class PhysicsComponent;
 };
 
