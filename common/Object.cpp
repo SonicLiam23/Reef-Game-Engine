@@ -39,6 +39,9 @@ void Object::Start()
 	{
 		script->Start();
 	}
+
+	if (physicsComponent)
+		physicsComponent->SetSize(m_rect.size);
 }
 
 void Object::SetTexture(const std::string& imgPath)
@@ -61,6 +64,10 @@ void Object::SetSize(Math::Vector2f newSize)
 {
 	m_rect.size = newSize;
 	ApplyRectToSprite();
+	if (physicsComponent)
+	{
+		physicsComponent->SetSize(newSize);
+	}
 }
 
 Math::Vector2f Object::GetSize()

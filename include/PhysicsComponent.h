@@ -12,10 +12,13 @@ private:
 	b2PolygonShape m_shape;
 	b2FixtureDef m_fixDef;
 	Object* m_attachedObj;
+	Object::PhysicsType m_type;
+	void InitPhysicsObject();
 
 public:
 	PhysicsComponent(Object* object, Object::PhysicsType type = Object::PhysicsType::STATIC);
 	void Update();
+	void SetSize(Math::Vector2f newSize);
 
 	static PhysicsEngine* PhysEngine;
 };

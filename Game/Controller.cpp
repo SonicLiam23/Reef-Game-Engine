@@ -26,5 +26,5 @@ void Controller::Update()
 void Controller::Start()
 {
 	//if(!Engine::Get().CameraAttachedObject)
-		Engine::Get().AttachCameraToObject(AttachedObject);
+		//Engine::Get().AttachCameraToObject(AttachedObject);
 }

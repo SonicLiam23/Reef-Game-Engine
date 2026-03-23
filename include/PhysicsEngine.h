@@ -9,7 +9,7 @@ private:
 	b2World m_world;
 
 public:
-	PhysicsEngine(Math::Vector2f gravity = {0.0f, -9.8f});
+	PhysicsEngine(Math::Vector2f gravity = {0.0f, 10.0f});
 	void Start();
 	void Update();
 	void End();
