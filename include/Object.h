@@ -23,10 +23,10 @@ public:
 	void SetTexture(const std::string& imgPath);
 	void SetPosition(Math::Vector2f newPos);
 	void SetSize(Math::Vector2f newSize);
+	void SetRotation(float angle);
 	Math::Vector2f GetSize();
 	Math::Vector2f GetPosition();
-	// pointer so you can track it, do not try to edit or delete 
-	const Math::Vector2f* const GetMiddle() const;
+	Math::Vector2f& GetPositionByPtr();
 	Math::Rect GetRect();
 	std::string GetImagePath();
 	bool IsColliding(Math::Vector2f point);

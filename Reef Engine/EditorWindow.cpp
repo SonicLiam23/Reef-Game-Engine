@@ -169,6 +169,7 @@ void EditorWindow::Update(ObjectVec& objectsToRender)
 		outline.setOutlineThickness(1.7f);
 		outline.setSize(object->GetSize());
 		outline.setPosition(object->GetPosition());
+		outline.setOrigin(object->GetSize() / 2.f);
 
 		m_viewPortTex->draw(outline);
 		m_viewPortTex->draw(*object);

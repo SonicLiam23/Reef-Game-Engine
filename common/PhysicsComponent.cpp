@@ -1,5 +1,7 @@
 #include "PhysicsComponent.h"
 #include "PhysicsEngine.h"
+#include "box2d/b2_draw.h"
+#include <iostream>
 PhysicsEngine* PhysicsComponent::PhysEngine = nullptr;
 void PhysicsComponent::InitPhysicsObject()
 {
@@ -16,14 +18,13 @@ PhysicsComponent::PhysicsComponent(Object* object, Object::PhysicsType type) : m
 	case Object::PhysicsType::DYNAMIC:
 		m_bodyDef.type = b2_dynamicBody;	
 		m_bodyDef.position.Set(b2position.x, b2position.y);
-		m_bodyDef.allowSleep = false;
 		m_body = PhysEngine->m_world.CreateBody(&m_bodyDef);
 		SetSize(m_attachedObj->GetSize());
 		m_fixDef.shape = &m_shape;
 		m_fixDef.density = 1.0f;
 		m_fixDef.friction = 0.3f;
 		m_body->CreateFixture(&m_fixDef);
-		m_body->SetGravityScale(1.0f);
+		// m_body->ApplyLinearImpulseToCenter({ 5000000, 0 }, true);
 
 		break;
 	case Object::PhysicsType::STATIC:
@@ -46,18 +47,27 @@ void PhysicsComponent::Update()
 {
 	// convert box2d metres to pixels
 	auto pos = m_body->GetPosition();
-	pos.x /= 30.0f;
-	pos.y /= 30.0f;
+	//pos.x /= 30.0f;
+	//pos.y /= 30.0f;
 	// -y is up in sfml
 	//pos.y = -pos.y;
-	m_attachedObj->SetPosition({ pos.x, pos.y});
 
+	
+	m_attachedObj->SetPosition({ pos.x, pos.y});
+	m_attachedObj->SetRotation(m_body->GetAngle());
+	
+
+	if (m_type == Object::PhysicsType::DYNAMIC)
+	{
+		std::cout << "DYNAMIC: " << pos.x << ", " << pos.y << std::endl;
+	}
+	else
+	{
+		std::cout << "STATIC: " << pos.x << ", " << pos.y << std::endl;
+	}
 }
 
 void PhysicsComponent::SetSize(Math::Vector2f newSize)
 {
-	// box2d uses metres, so convert pixels to metres ( *30 ) then divide by 2 
-	newSize.x /= 60.0f;
-	newSize.y /= 60.0f;	
-	m_shape.SetAsBox(newSize.x, newSize.y);
+	m_shape.SetAsBox(newSize.x / 2, newSize.y / 2);
 }

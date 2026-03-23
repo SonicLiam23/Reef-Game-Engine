@@ -3,7 +3,8 @@
 ScriptUPtr SerializableFactory::Create(const std::string& name) const
 {
     auto it = m_registry.find(name);
-    if (it != m_registry.end()) return it->second();
+    if (it != m_registry.end()) 
+        return it->second();
     return nullptr;
 }
 

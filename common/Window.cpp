@@ -25,13 +25,14 @@ void Window::SetCameraPosition(Math::Vector2f newPosition)
 
 void Window::SetCameraPosition(Object* obj)
 {
-	m_localViewCenter = *obj->GetMiddle();
+	m_localViewCenter = obj->GetPosition();
 	m_realViewCenter = &m_localViewCenter;
 }
 
 void Window::AttachCameraToObject(Object* obj)
 {
-	m_realViewCenter = obj->GetMiddle();
+
+	m_realViewCenter = (const Math::Vector2f*)&obj->GetPositionByPtr();
 }
 
 const Math::Vector2f Window::GetCameraPosition() const

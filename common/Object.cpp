@@ -16,6 +16,7 @@ Object::Object() : m_sprite(SpriteUtils::EmptyTexture()), m_markedForDeletion(fa
 void Object::Init()
 {
 	m_sprite = SpriteUtils::CreateSprite(m_localImgPath);
+	m_sprite.setOrigin((sf::Vector2f)m_sprite.getTexture().getSize() / 2.f);
 
 	if (m_rect.size.IsZero())
 	{
@@ -39,9 +40,6 @@ void Object::Start()
 	{
 		script->Start();
 	}
-
-	if (physicsComponent)
-		physicsComponent->SetSize(m_rect.size);
 }
 
 void Object::SetTexture(const std::string& imgPath)
@@ -70,6 +68,12 @@ void Object::SetSize(Math::Vector2f newSize)
 	}
 }
 
+void Object::SetRotation(float angle)
+{
+	sf::Angle a = sf::radians(angle);
+	m_sprite.setRotation(a);
+}
+
 Math::Vector2f Object::GetSize()
 {
 	return m_rect.size;
@@ -80,9 +84,10 @@ Math::Vector2f Object::GetPosition()
 	return m_rect.position;
 }
 
-const Math::Vector2f* const Object::GetMiddle() const
+// useful if you need to track it, such as the camera system
+Math::Vector2f& Object::GetPositionByPtr()
 {
-	return &m_middle;
+	return m_rect.position;
 }
 
 Math::Rect Object::GetRect()
@@ -158,7 +163,6 @@ bool Object::IsColliding(Math::Vector2f point)
 
 void Object::Update()
 {
-	m_middle = (Math::Vector2f)m_sprite.getGlobalBounds().getCenter();
 	for (ScriptUPtr& script : m_scripts)
 	{
 		script->Update();
@@ -200,6 +204,7 @@ void Object::ApplyRectToSprite()
 	m_sprite.setScale(targetScale);
 
 	m_sprite.setPosition(m_rect.position);
+	m_sprite.setOrigin((sf::Vector2f)m_sprite.getTexture().getSize() / 2.f);
 }
 
 void to_json(nlohmann::json& j, const Object& obj)
