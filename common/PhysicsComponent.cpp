@@ -10,8 +10,10 @@ void PhysicsComponent::InitPhysicsObject()
 PhysicsComponent::PhysicsComponent(Object* object, Object::PhysicsType type) : m_attachedObj(object), m_type(type)
 {
 	// testing to get it working, will integrate properly later
-
+	float conversion = PhysEngine->pixelsPerMetre;
 	b2Vec2 b2position = (b2Vec2)m_attachedObj->GetPosition();
+	b2position.x /= conversion;
+	b2position.y /= conversion;
 
 	switch (m_type)
 	{
@@ -24,7 +26,6 @@ PhysicsComponent::PhysicsComponent(Object* object, Object::PhysicsType type) : m
 		m_fixDef.density = 1.0f;
 		m_fixDef.friction = 0.3f;
 		m_body->CreateFixture(&m_fixDef);
-		// m_body->ApplyLinearImpulseToCenter({ 5000000, 0 }, true);
 
 		break;
 	case Object::PhysicsType::STATIC:
@@ -47,8 +48,8 @@ void PhysicsComponent::Update()
 {
 	// convert box2d metres to pixels
 	auto pos = m_body->GetPosition();
-	//pos.x /= 30.0f;
-	//pos.y /= 30.0f;
+	pos.x *= PhysEngine->pixelsPerMetre;
+	pos.y *= PhysEngine->pixelsPerMetre;
 	// -y is up in sfml
 	//pos.y = -pos.y;
 
@@ -67,7 +68,62 @@ void PhysicsComponent::Update()
 	}
 }
 
+void PhysicsComponent::SetPosition(Math::Vector2f pixelCoords)
+{
+	b2Vec2 pos;
+	pos.x = pixelCoords.x / PhysEngine->pixelsPerMetre;
+	pos.y = pixelCoords.y / PhysEngine->pixelsPerMetre;
+	m_body->SetTransform(pos, m_body->GetAngle());
+}
+
+void PhysicsComponent::SetRotation(float angle)
+{
+	m_body->SetTransform(m_body->GetPosition(), angle);
+}
+
 void PhysicsComponent::SetSize(Math::Vector2f newSize)
 {
+	newSize.x /= PhysEngine->pixelsPerMetre;
+	newSize.y /= PhysEngine->pixelsPerMetre;
 	m_shape.SetAsBox(newSize.x / 2, newSize.y / 2);
+}
+
+void PhysicsComponent::AddForce(float strength, Math::Vector2f direction)
+{
+	direction.Normalize();
+	direction.x *= strength;
+	direction.y *= strength;
+
+	// I dont think the naming is right but this is all internal so only I will see it.
+	AddForce(direction);
+}
+
+void PhysicsComponent::AddForce(Math::Vector2f force)
+{
+	m_body->ApplyForceToCenter(force, false);
+}
+
+void PhysicsComponent::SetVelocity(Math::Vector2f newVelocity)
+{
+	m_body->SetLinearVelocity(newVelocity);
+}
+
+void PhysicsComponent::AddImpulse(float strength, Math::Vector2f direction)
+{
+	direction.Normalize();
+	direction.x *= strength;
+	direction.y *= strength;
+
+	// I dont think the naming is right but this is all internal so only I will see it.
+	AddImpulse(direction);
+}
+
+void PhysicsComponent::AddImpulse(Math::Vector2f force)
+{
+	m_body->ApplyLinearImpulseToCenter(force, false);
+}
+
+void PhysicsComponent::SetGravityScale(float scale)
+{
+	m_body->SetGravityScale(scale);
 }

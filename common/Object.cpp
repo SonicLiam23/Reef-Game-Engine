@@ -56,6 +56,8 @@ void Object::SetPosition(Math::Vector2f newPos)
 {
 	m_rect.position = newPos;
 	m_sprite.setPosition(newPos);
+	if (physicsComponent)
+		physicsComponent->SetPosition(newPos);
 }
 
 void Object::SetSize(Math::Vector2f newSize)
@@ -72,6 +74,8 @@ void Object::SetRotation(float angle)
 {
 	sf::Angle a = sf::radians(angle);
 	m_sprite.setRotation(a);
+	if (physicsComponent)
+		physicsComponent->SetRotation(angle);
 }
 
 Math::Vector2f Object::GetSize()

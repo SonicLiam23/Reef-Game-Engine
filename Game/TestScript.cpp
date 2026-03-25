@@ -1,8 +1,6 @@
 #include "TestScript.h"
-#include <iostream>
-#include "Input.h"
-#include "Engine.h"
 #include "Object.h"
+#include "PhysicsComponent.h"
 
 void TestScript::Update()
 {
@@ -12,4 +10,6 @@ void TestScript::Update()
 void TestScript::Start()
 {
 	AttachedObject->AddPhysics(Object::PhysicsType::DYNAMIC);
+	//AttachedObject->physicsComponent->SetVelocity({ -10, 0 });
+	AttachedObject->physicsComponent->AddImpulse({ 0, -30 });
 }

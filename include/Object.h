@@ -9,7 +9,6 @@
 #include "Script.h"
 #include "SerializableFactory.h"
 
-
 class PhysicsComponent;
 class ENGINE_API Object : public sf::Drawable
 {

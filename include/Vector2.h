@@ -3,12 +3,14 @@
 #include "box2d/b2_math.h"
 #include "json.hpp"
 #include "EngineAPI.h"
+#include <cmath>
 // allows the user to automatically use a Math::Vector2x when needing a sf::Vector2, but not use a sf::Vector2 in place of Math::Vector2
 namespace Math
 {
 	template <typename T = float>
 	struct Vector2
 	{
+		static_assert(std::is_arithmetic_v<T>, "Vector2s type must be numeric");
 		T x, y;
 
 		constexpr Vector2() = default;
@@ -72,6 +74,37 @@ namespace Math
 			return Vector2<T>(x / rhs, y / rhs);
 		}
 
+		inline float GetLength()
+		{
+			return std::sqrt((x * x) + (y * y));
+		}
+
+		inline void Normalize()
+		{
+			Vector2<T> temp = Normalized();
+			x = temp.x; y = temp.y;
+		}
+
+		inline Vector2<T> Normalized()
+		{
+			Vector2<T> newVec;
+			if (x == 0)
+			{
+				newVec = { 0, 1 };
+			}
+			else if (y == 0)
+			{
+				newVec = { 1, 0 };
+			}
+			else
+			{
+				float length = GetLength();
+				newVec.x = x / length;
+				newVec.y = y / length;
+			}
+
+			return newVec;
+		}
 
 		NLOHMANN_DEFINE_TYPE_INTRUSIVE(Vector2, x, y);
 	};

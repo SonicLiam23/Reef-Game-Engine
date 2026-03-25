@@ -1,6 +1,6 @@
 #include "PhysicsEngine.h"
 #include "PhysicsComponent.h"
-PhysicsEngine::PhysicsEngine(Math::Vector2f gravity) : m_world(gravity)
+PhysicsEngine::PhysicsEngine(Math::Vector2f gravity, float PPM) : m_world(gravity), pixelsPerMetre(PPM)
 {
 	PhysicsComponent::PhysEngine = this;
 }
